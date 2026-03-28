@@ -6,226 +6,230 @@
     <title>שיר אורן | AI מ-0 ל-1</title>
     <link href="https://fonts.googleapis.com/css2?family=Assistant:wght@300;400;600;700;800&display=swap" rel="stylesheet">
     <style>
-        /* הגדרה גלובלית לפונט אחיד */
         * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Assistant', sans-serif !important; }
-        
-        :root { --indigo-700: #4338ca; --indigo-800: #3730a3; --slate-900: #0f172a; --green-600: #16a34a; }
+        :root { --indigo: #4338ca; --slate: #0f172a; --green: #16a34a; --light-indigo: #f5f3ff; }
         body, html { height: 100%; background: #fff; overflow-x: hidden; }
 
-        .nav-bar { position: fixed; top: 0; width: 100%; background: rgba(255,255,255,0.95); padding: 15px 40px; display: flex; justify-content: space-between; align-items: center; z-index: 100; border-bottom: 1px solid #eee; }
-        .nav-links a { color: black; text-decoration: none; margin-left: 20px; font-weight: 700; }
+        /* Header */
+        .nav-bar { position: fixed; top: 0; width: 100%; background: #fff; padding: 15px 40px; display: flex; justify-content: space-between; align-items: center; z-index: 100; border-bottom: 1px solid #eee; }
+        .skip-link { color: #64748b; text-decoration: none; font-weight: 700; font-size: 14px; cursor: pointer; }
 
         .main-wrapper { display: flex; min-height: 100vh; flex-direction: row-reverse; padding-top: 60px; }
 
-        /* ימין - המסתורין */
+        /* פאנל ימני */
         .image-side { flex: 1; position: relative; background: url('shir-profile.jpg') no-repeat center center; background-size: cover; min-height: 50vh; }
         .image-side::after { content: ''; position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: linear-gradient(to left, rgba(0,0,0,0.85) 0%, rgba(0,0,0,0.3) 100%); }
         .side-text { position: absolute; bottom: 60px; right: 40px; color: white; z-index: 2; max-width: 450px; }
-        .side-text h2 { font-size: 42px; font-weight: 800; margin-bottom: 10px; }
-        .side-text p { font-size: 20px; line-height: 1.5; font-weight: 300; opacity: 0.9; }
+        .side-text h2 { font-size: 42px; font-weight: 800; margin-bottom: 15px; }
+        .side-text p { font-size: 20px; line-height: 1.4; font-weight: 300; }
 
-        /* שמאל - פאנל הפעולה */
+        /* פאנל שמאלי */
         .content-side { flex: 1.2; padding: 40px 60px; display: flex; flex-direction: column; justify-content: center; }
-        .quiz-card { max-width: 600px; width: 100%; margin: 0 auto; background: #fff; border: 1px solid #e2e8f0; border-radius: 24px; padding: 32px; shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1); }
+        .action-card { max-width: 700px; width: 100%; margin: 0 auto; }
 
         .hidden { display: none; }
-        .step-label { font-size: 14px; color: #64748b; margin-bottom: 8px; }
-        .question-title { font-size: 28px; font-weight: 800; color: #0f172a; margin-bottom: 24px; line-height: 1.2; }
         
-        .option-btn { width: 100%; padding: 16px; margin-bottom: 12px; border: 1px solid #e2e8f0; border-radius: 16px; background: white; cursor: pointer; text-align: right; font-size: 18px; font-weight: 600; transition: all 0.2s; color: #1e293b; }
-        .option-btn:hover { border-color: #818cf8; background: #f5f3ff; }
-        .option-btn.selected { border-color: #6366f1; background: #f5f3ff; border-width: 2px; }
-
-        .tip-box { background: #f5f3ff; border: 1px solid #ddd6fe; border-radius: 16px; padding: 20px; margin-top: 20px; }
-        .tip-title { font-weight: 800; color: #4338ca; font-size: 14px; margin-bottom: 8px; }
-        .tip-text { font-size: 15px; color: #334155; line-height: 1.6; }
-
-        .next-btn { background: #0f172a; color: white; border: none; padding: 18px; border-radius: 16px; width: 100%; font-size: 18px; font-weight: 700; cursor: pointer; margin-top: 24px; transition: 0.2s; }
-        .next-btn:hover { background: #1e293b; }
-
-        .summary-box { background: #f0fdf4; border: 1px solid #bbf7d0; padding: 24px; border-radius: 20px; margin-top: 20px; }
-        .whatsapp-btn { background: #16a34a; color: white; text-decoration: none; display: flex; justify-content: center; align-items: center; padding: 18px; border-radius: 16px; font-weight: 700; font-size: 18px; margin-top: 20px; }
+        .main-btn { width: 100%; padding: 18px; border-radius: 16px; font-size: 18px; font-weight: 800; cursor: pointer; transition: 0.2s; border: none; margin-bottom: 12px; text-align: center; text-decoration: none; display: block; }
+        .btn-black { background: var(--slate); color: white; }
+        .btn-indigo { background: var(--indigo); color: white; }
+        .btn-whatsapp { background: var(--green); color: white; }
         
-        @media (max-width: 1024px) { .main-wrapper { flex-direction: column; } .image-side { height: 40vh; } .content-side { padding: 30px 20px; } }
+        /* Grid לאופציות */
+        .options-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 10px; margin-bottom: 20px; }
+        .option-btn { padding: 15px; border: 1px solid #e2e8f0; border-radius: 12px; background: white; cursor: pointer; text-align: right; font-size: 16px; font-weight: 600; transition: 0.2s; position: relative; }
+        .option-btn.selected { border-color: var(--indigo); background: var(--light-indigo); border-width: 2px; }
+        .option-btn.selected::after { content: '✓'; position: absolute; left: 12px; color: var(--indigo); }
+
+        .info-box { background: #f8fafc; border: 1px solid #e2e8f0; padding: 30px; border-radius: 24px; margin-bottom: 30px; }
+        .tip-box { background: var(--light-indigo); border: 1px solid #ddd6fe; border-radius: 16px; padding: 20px; margin-top: 10px; margin-bottom: 20px; }
+        .summary-box { background: #f0fdf4; border: 1px solid #bbf7d0; padding: 20px; border-radius: 16px; margin-top: 20px; font-size: 15px; }
+
+        @media (max-width: 1024px) { .main-wrapper { flex-direction: column; } .image-side { height: 35vh; } .content-side { padding: 20px; } }
     </style>
 </head>
 <body>
 
 <nav class="nav-bar">
     <div style="font-weight: 800;">Shir Oren AI</div>
-    <div class="nav-links">
-        <a href="/app-link1/index.html">לקורס</a>
-        <a href="/guides/ai-agentic.html">מדריכים</a>
-    </div>
+    <div class="skip-link" onclick="location.reload()">דלג</div>
 </nav>
 
 <div class="main-wrapper">
     <div class="image-side">
         <div class="side-text">
             <h2>שיר אורן</h2>
-            <p>אחרי 15 שנים כ-Product Manager, הבנתי ש-AI הוא שינוי תפיסה. כפי שלמדתם להשתמש באינסטגרם – תוכלו ללמוד גם את זה ;) </p>
+            <p>אחרי 15 שנים כ-Product Manager, גיליתי שגם עם ניסיון קוד – ללמוד AI זה מסע. כפי שלמדתם להשתמש באינסטגרם – תוכלו ללמוד גם את זה ;) </p>
         </div>
     </div>
 
     <div class="content-side">
-        <div class="quiz-card">
-            <div id="quiz-intro">
-                <h1 style="font-size: 32px; font-weight: 800; margin-bottom: 15px;">בואו נבין איפה אתם עומדים</h1>
-                <p style="color: #64748b; margin-bottom: 30px;">5 שאלות קצרות. בסוף תקבלו כיוון ראשוני, ותוכלו לשלוח לי הודעת WhatsApp ממוקדת לשיחת תיאום ציפיות.</p>
-                <button onclick="startQuiz()" class="next-btn" style="background: #4338ca;">מה הכי מעכב אותך היום בעבודה עם AI?</button>
-            </div>
-
-            <div id="quiz-panel" class="hidden">
-                <div id="step-label" class="step-label"></div>
-                <h3 id="question-text" class="question-title"></h3>
-                <div id="options-container"></div>
-
-                <div id="tip-box" class="hidden tip-box">
-                    <div class="tip-title">טיפ קטן</div>
-                    <p id="tip-text" class="tip-text"></p>
+        <div class="action-card">
+            
+            <div id="home-view">
+                <div class="info-box">
+                    <h2 style="margin-bottom: 15px; font-weight: 800;">בואו נדבר תכלס.</h2>
+                    <p style="font-size: 18px; line-height: 1.6; color: #334155; margin-bottom: 25px;">
+                        אני עוזרת לאנשים לחשוב נכון ולבנות מסוגלות להתמודד עם כל הר שיבוא. 
+                        <strong>אני מציעה שיחת תיאום ציפיות קצרה (15 דק'), ללא התחייבות.</strong>
+                        נראה אם יש לנו איך להתקדם יחד.
+                    </p>
+                    <a href="https://wa.me/972500000000" class="main-btn btn-whatsapp">שיחת תיאום ציפיות בוואטסאפ</a>
                 </div>
-
-                <button id="next-btn" class="hidden next-btn" onclick="goToNextStep()">להמשיך</button>
+                <button onclick="startQuiz()" class="main-btn btn-indigo">התחלת אבחון AI למיקוד צרכים</button>
             </div>
 
-            <div id="quiz-result" class="hidden">
-                <h3 style="font-size: 26px; font-weight: 800; color: #065f46;">מעולה. זה הכיוון שאני מזהה:</h3>
-                <div id="summary-content" class="summary-box"></div>
+            <div id="quiz-view" class="hidden">
+                <div id="step-label" style="font-size: 14px; color: #64748b; margin-bottom: 8px;"></div>
+                <h3 id="question-text" style="font-size: 24px; font-weight: 800; margin-bottom: 20px;"></h3>
+                <p style="font-size: 13px; color: #64748b; margin-bottom: 15px;">ניתן לבחור עד 4 אפשרויות</p>
+                <div id="options-container" class="options-grid"></div>
                 
-                <div style="margin-top: 24px; font-size: 15px; line-height: 1.6; color: #334155; background: #f8fafc; padding: 20px; border-radius: 16px;">
-                    אני אוהבת לעזור לאנשים לחשוב נכון, לבנות יכולת ומסוגלות, כדי להתמודד גם עם הפרויקט הזה וגם עם כל הר שיבוא אחריו.
-                    אפשר לקבוע שיחת תיאום ציפיות קצרה (15 דק'), ללא התחייבות. מחירים ופירוט נוסף יהיו בשיחה.
+                <div id="tip-box" class="hidden tip-box">
+                    <div style="font-weight: 800; color: var(--indigo); font-size: 14px;">טיפ קטן</div>
+                    <p id="tip-text" style="font-size: 15px; margin-top: 5px;"></p>
                 </div>
+                <button id="next-btn" class="hidden main-btn btn-black" onclick="nextStep()">להמשיך</button>
+            </div>
 
-                <a id="wa-link" href="#" target="_blank" class="whatsapp-btn">שליחת WhatsApp לשיר</a>
-                <button onclick="location.reload()" style="width:100%; background:none; border:none; color:#64748b; margin-top:15px; cursor:pointer; font-weight:600;">להתחיל מחדש</button>
+            <div id="result-view" class="hidden">
+                <h3 style="font-size: 24px; font-weight: 800; color: #065f46;">המיקוד המסתמן:</h3>
+                <div id="summary-content" class="summary-box"></div>
+                <a id="wa-final-link" href="#" target="_blank" class="main-btn btn-whatsapp" style="margin-top: 20px;">שליחת וואטסאפ ממוקד</a>
+                <button onclick="location.reload()" style="background:none; border:none; color:#64748b; width:100%; margin-top:10px; cursor:pointer;">חזרה לדף הראשי</button>
             </div>
         </div>
     </div>
 </div>
 
 <script>
-    const MY_PHONE = "972500000000"; // שיר - עדכני למספר שלך
-    
+    const MY_PHONE = "972500000000"; 
     const quizSteps = [
         {
-            key: 'blocker',
+            key: 'barrier',
             question: 'מה הכי מעכב אותך היום בעבודה עם AI?',
+            multi: true,
             options: [
-                { val: 'אני לא יודעת מאיפה להתחיל', tip: 'כשניגשים לבעיה קודם דרך תכנון יעיל ומדויק, אפשר להבין הרבה יותר טוב מה עושים. אתם לא לבד.' },
-                { val: 'אני מתפזרת בין כלים וסרטונים', tip: 'בדרך כלל כדאי קודם להחליט מה המטרה, ורק אחר כך לבחור כלי אחד מתאים.' },
-                { val: 'התשובות שטחיות מדי', tip: 'כמעט תמיד צריך לעבוד בסבבים: בעיה, דיוק, מבנה, ורק אז ביצוע.' }
+                { val: 'הצפה ובלבול בין כלים', tip: 'הסוד הוא לא להכיר את כל הכלים, אלא לזהות אילו כלים באמת מועילים לך, על מה מוכנ.ה לשלם ולשלוט באלה בלבד עם אקו-סיסטם פשוט, מהיר ויעיל. כל השאר - זה פשוט Fomo ולא מעניין.' },
+                { val: 'זה לוקח יותר זמן מלעשות לבד', tip: 'אם זה לוקח זמן, ה-Workflow פשוט לא מותאם. AI אמור להיות מנוע. זה אומר שצריך לזהות אילו כלים באמת יועילו לך ותפיק.י מהם את המירב וכמובן, איך לעבוד איתם- נכון.' },
+                { val: 'תשובות שטחיות ולא מדויקות', tip: 'כמעט תמיד צריך לעבוד בסבבים: בעיה, דיוק, מבנה, ורק אז ביצוע. כשניגשים לבעיה דרך תכנון יעיל ומדויק, אפשר להבין בדיוק מה עושים.' },
+                { val: 'יש לי רעיון אבל תקוע.ה באמצע', tip: 'כאן צריך לעבור מרעיון למסלול ברור: מה הערך ומה הגרסה הכי קטנה ששווה לבנות, לחילופין- להתחיל ללמוד להשתמש בתותחים הגדולים בלי לפחד. גם אני הייתי שם, ללמוד ולהתמיד!' }
             ]
         },
         {
-            key: 'goal',
-            question: 'מה היית רוצה להשיג בתקופה הקרובה?',
+            key: 'goals',
+            question: 'מה המטרה או המטרות בתקופה הקרובה?',
+            multi: true,
             options: [
-                { val: 'לבנות אתר או דף נחיתה', tip: 'כאן חשוב להתחיל ממסר ומבנה, לא רק מעיצוב.' },
-                { val: 'להוציא פרויקט ראשון אמיתי', tip: 'פרויקט ראשון טוב צריך להיות קטן, ברור, ומשהו שאפשר באמת לסיים.' },
-                { val: 'לבנות שיטת עבודה נכונה', tip: 'זאת המטרה החשובה ביותר. בלי שיטה, גם כלים טובים לא עוזרים לאורך זמן.' }
+                { val: 'בניית אתר או דף נחיתה', tip: 'קודם כדאי להבחין ביניהם. זה יכול לקחת משעתיים ועד יומיים - החשוב הוא לזהות את ה-Stack המתאים. אני מעלה תוכן רלוונטי על זה בדיוק!' },
+                { val: 'פרויקט עם Cursor או Antigravity', tip: 'כלים חזקים מאוד כשיש כבר חשיבה, Scope ותכנון מקדים. כשמתכננים נכון, הביצוע מהיר פי 10.' },
+                { val: 'פיתוח HTML עם צ\'אטים קיימים', tip: 'כן, זה אפשרי (בלי לשלם על עוד צ\'אטים). אבל רק אם עובדים נכון, בודקים, ומבינים מה בונים.' },
+                { val: 'לא יודע.ת מאיפה להתחיל', tip: 'יש לך רעיון וזהו? אל דאגה. לא רוצים לבזבז זמן על עבודה לא נכונה. תכנון מוקדם יחסוך לך שבועות של בלבול.' },
+                { val: 'הכשרת צוות ו-Skills', tip: 'חלוקה נכונה של עבודה בין בני אדם ל-AI היא המפתח ליעילות בארגון.' },
+                { val: 'ידע כללי ומושגי יסוד', tip: 'בסיס טוב חוסך המון תלות ובלבול בהמשך הדרך.' }
             ]
         },
         {
-            key: 'help',
-            question: 'במה היית רוצה עזרה ממני?',
+            key: 'tools',
+            question: 'עם איזה צ\'אט אתם/ן עובדים היום?',
+            multi: true,
+            options: [{ val: 'ChatGPT' }, { val: 'Claude' }, { val: 'Gemini' }, { val: 'אחר/כלום' }]
+        },
+        {
+            key: 'experience',
+            question: 'מה מצב המיומנות ב-AI כרגע?',
+            multi: false,
             options: [
-                { val: 'אתר / דף נחיתה / פיתוח HTML', tip: 'דף טוב בנוי מהיררכיה ברורה, מסר חד, וקריאה לפעולה שלא הולכת לאיבוד.' },
-                { val: 'פרויקט עם Cursor או Antigravity', tip: 'הכלים האלה חזקים מאוד כשיש כבר חשיבה, scope ותכנון מקדים.' },
-                { val: 'ללמוד לעבוד נכון (מתודולוגיה)', tip: 'זו מיומנות אמיתית. לא רק prompts, אלא דרך חשיבה ובחירת מהלך נכון.' }
+                { val: 'רק מתחילים לבדוק את התחום', tip: 'בהתחלה עדיף לצמצם: נושא אחד, מטרה אחת.' },
+                { val: 'ניסינו קצת ונתקענו', tip: 'שלב נפוץ. לרוב צריך פחות רעש ויותר מסגרת עבודה.' },
+                { val: 'רוצים לעבוד חכם ומסודר', tip: 'כאן בונים יכולת אמיתית ולא רק תלות בכלי.' }
             ]
         },
         {
-            key: 'tool',
-            question: 'עם מה היית רוצה לעבוד?',
+            key: 'reasons',
+            question: 'מה הכי חשוב לכם/ן להשיג?',
+            multi: true,
             options: [
-                { val: 'ChatGPT / Claude בלבד', tip: 'גם עם מה שכבר יש לך אפשר להגיע רחוק בשיטה נכונה.' },
-                { val: 'Cursor / פיתוח קוד', tip: 'מעולה. כאן הדגש הוא על בניית ארכיטקטורה נכונה לפני שכותבים שורה אחת.' },
-                { val: 'עוד לא יודעת, צריכה הכוונה', tip: 'זה מצב מצוין. עדיף לבחור נכון מאשר לקפוץ לכלי נוצץ סתם.' }
-            ]
-        },
-        {
-            key: 'stage',
-            question: 'איפה את נמצאת היום?',
-            options: [
-                { val: 'רק מתחילה לבדוק את העולם הזה', tip: 'בהתחלה עדיף לצמצם: נושא אחד, מטרה אחת.' },
-                { val: 'ניסיתי כבר קצת ונתקעתי', tip: 'זה שלב נפוץ מאוד. לרוב צריך פחות רעש ויותר מסגרת עבודה.' },
-                { val: 'רוצה לעבוד חכם ומסודר יותר', tip: 'זאת בדיוק הנקודה שבה בונים יכולת אמיתית ולא רק תלות בכלי.' }
+                { val: 'הבדלים בין Cursor ל-Claude Code', tip: 'חשוב להבין מה באמת שווה את ההשקעה ומה מתאים ל-Workflow שלך.' },
+                { val: 'להתיידד עם ה"מסכים השחורים"', tip: 'הטרמינל הוא לא אויב, הוא הכלי הכי חזק שלכם ברגע שמבינים אותו.' },
+                { val: 'בניית צוות סוכנים', tip: 'העתיד הוא לא צ\'אט אחד, אלא רשת של סוכנים שעובדים עבורכם.' },
+                { val: 'לא להישאר מאחור', tip: 'הקצב מהיר, אבל עם שיטה נכונה אפשר לשחות בזה בביטחון.' },
+                { val: 'שימוש ב-AI תחת מגבלות ארגון', tip: 'איך עובדים בתוך ה-Eco System של החברה בלי להתפשר על תוצאות.' },
+                { val: 'סטודנטים: לגשר על הפער ל-AI', tip: 'חשיבת AI היא המיומנות שלא מלמדים באקדמיה, וזה בדיוק מה שצריך היום בשוק.' }
             ]
         }
     ];
 
     let currentStep = 0;
-    let answers = {};
+    let answers = { barrier: [], goals: [], tools: [], experience: [], reasons: [] };
 
     function startQuiz() {
-        document.getElementById('quiz-intro').classList.add('hidden');
-        document.getElementById('quiz-panel').classList.remove('hidden');
+        document.getElementById('home-view').classList.add('hidden');
+        document.getElementById('quiz-view').classList.remove('hidden');
         renderStep();
     }
 
     function renderStep() {
         const step = quizSteps[currentStep];
-        document.getElementById('step-label').textContent = `שאלה ${currentStep + 1} מתוך ${quizSteps.length}`;
+        document.getElementById('step-label').textContent = `שאלה ${currentStep + 1} מתוך 5`;
         document.getElementById('question-text').textContent = step.question;
-        
         const container = document.getElementById('options-container');
         container.innerHTML = '';
-        document.getElementById('tip-box').classList.add('hidden');
-        document.getElementById('next-btn').classList.add('hidden');
-
+        
         step.options.forEach(opt => {
             const btn = document.createElement('button');
             btn.className = 'option-btn';
+            if (answers[step.key].includes(opt.val)) btn.classList.add('selected');
             btn.textContent = opt.val;
-            btn.onclick = () => selectOption(opt, btn);
+            
+            btn.onclick = () => {
+                if (!step.multi) answers[step.key] = [opt.val];
+                else {
+                    const idx = answers[step.key].indexOf(opt.val);
+                    if (idx > -1) answers[step.key].splice(idx, 1);
+                    else if (answers[step.key].length < 4) answers[step.key].push(opt.val);
+                }
+                
+                renderStep();
+                if (opt.tip) {
+                    document.getElementById('tip-text').textContent = opt.tip;
+                    document.getElementById('tip-box').classList.remove('hidden');
+                }
+                document.getElementById('next-btn').classList.remove('hidden');
+            };
             container.appendChild(btn);
         });
     }
 
-    function selectOption(opt, btn) {
-        answers[quizSteps[currentStep].key] = opt.val;
-        document.querySelectorAll('.option-btn').forEach(b => b.classList.remove('selected'));
-        btn.classList.add('selected');
-        
-        document.getElementById('tip-text').textContent = opt.tip;
-        document.getElementById('tip-box').classList.remove('hidden');
-        document.getElementById('next-btn').classList.remove('hidden');
-    }
-
-    function goToNextStep() {
+    function nextStep() {
         currentStep++;
-        if (currentStep < quizSteps.length) {
-            renderStep();
-        } else {
-            showResult();
-        }
+        if (currentStep < 5) renderStep();
+        else showFinal();
     }
 
-    function showResult() {
-        document.getElementById('quiz-panel').classList.add('hidden');
-        document.getElementById('quiz-result').classList.remove('hidden');
-        
+    function showFinal() {
+        document.getElementById('quiz-view').classList.add('hidden');
+        document.getElementById('result-view').classList.remove('hidden');
         const summary = document.getElementById('summary-content');
+        
+        const fmt = (arr) => arr.length > 0 ? arr.join(', ') : 'לא נבחר';
         summary.innerHTML = `
-            <p><strong>החסם:</strong> ${answers.blocker}</p>
-            <p><strong>השאיפה:</strong> ${answers.goal}</p>
-            <p><strong>העזרה הנדרשת:</strong> ${answers.help}</p>
-            <p><strong>הכלי:</strong> ${answers.tool}</p>
-            <p><strong>הסטטוס:</strong> ${answers.stage}</p>
+            <p><strong>חסמים:</strong> ${fmt(answers.barrier)}</p>
+            <p><strong>מטרות:</strong> ${fmt(answers.goals)}</p>
+            <p><strong>כלים:</strong> ${fmt(answers.tools)}</p>
+            <p><strong>חשוב לכם/ן:</strong> ${fmt(answers.reasons)}</p>
         `;
 
-        const waText = encodeURIComponent(`היי שיר, עברתי על הפאנל באתר.
-החסם שלי: ${answers.blocker}
-השאיפה: ${answers.goal}
-עזרה ב: ${answers.help}
-כלי מועדף: ${answers.tool}
-אני כרגע: ${answers.stage}
+        const waText = encodeURIComponent(`היי שיר, עברתי את האבחון באתר.
+החסמים שלי: ${fmt(answers.barrier)}
+מטרות: ${fmt(answers.goals)}
+כלים: ${fmt(answers.tools)}
+מצב נוכחי: ${fmt(answers.experience)}
+חשוב לי: ${fmt(answers.reasons)}
 
-אשמח לשיחת תיאום ציפיות קצרה.`);
-        document.getElementById('wa-link').href = `https://wa.me/${MY_PHONE}?text=${waText}`;
+אשמח לשיחת תיאום ציפיות (15 דק').`);
+        
+        document.getElementById('wa-final-link').href = `https://wa.me/${MY_PHONE}?text=${waText}`;
     }
 </script>
-
 </body>
 </html>
