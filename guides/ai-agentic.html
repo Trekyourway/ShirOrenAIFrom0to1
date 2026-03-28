@@ -3,6 +3,744 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>מדריך כלי ה-AI Agentic — גרסה 0.4</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Assistant:wght@300;400;600;700&family=Heebo:wght@300;500;700;800;900&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --blue-deep: #1e3a5f;
+            --blue-mid: #2563eb;
+            --surface: #f8fafc;
+        }
+
+        @media (max-width: 768px) {
+            .max-w-6xl { padding-left: 1rem; padding-right: 1rem; }
+            h1 { font-size: 2.2rem !important; }
+            .grid { grid-template-columns: 1fr !important; }
+            table { display: block; overflow-x: auto; font-size: 0.75rem; }
+            section { margin-bottom: 2rem !important; }
+        }
+
+        body { font-family: 'Assistant', sans-serif; background-color: var(--surface); }
+        h1, h2, h3, h4 { font-family: 'Heebo', sans-serif; }
+
+        .header-bg {
+            background: linear-gradient(135deg, #0f172a 0%, #1e3a5f 40%, #1e40af 100%);
+            position: relative; overflow: hidden;
+        }
+        .header-bg::before {
+            content: '';
+            position: absolute; inset: 0;
+            background-image: radial-gradient(circle at 20% 50%, rgba(59,130,246,0.15) 0%, transparent 60%),
+                              radial-gradient(circle at 80% 20%, rgba(139,92,246,0.1) 0%, transparent 40%);
+        }
+
+        .sticky-nav {
+            position: sticky; top: 0; z-index: 50;
+            background: rgba(255,255,255,0.95);
+            backdrop-filter: blur(12px);
+            border-bottom: 1px solid #e2e8f0;
+        }
+        .nav-link { position: relative; padding-bottom: 4px; color: #475569; transition: color 0.2s; }
+        .nav-link::after { content: ''; position: absolute; bottom: 0; right: 0; width: 0; height: 2px; background: var(--blue-mid); transition: width 0.25s; }
+        .nav-link.active, .nav-link:hover { color: var(--blue-mid); }
+        .nav-link.active::after, .nav-link:hover::after { width: 100%; }
+
+        .card { background: #fff; border-radius: 1.25rem; box-shadow: 0 1px 3px rgba(0,0,0,0.07), 0 8px 24px rgba(0,0,0,0.05); transition: transform 0.25s, box-shadow 0.25s; }
+        .card:hover { transform: translateY(-4px); box-shadow: 0 4px 6px rgba(0,0,0,0.05), 0 16px 40px rgba(0,0,0,0.1); }
+
+        .tool-tag { font-size: 0.68rem; padding: 2px 8px; border-radius: 999px; font-weight: 700; letter-spacing: 0.04em; text-transform: uppercase; }
+
+        .comparison-table thead th { position: sticky; top: 0; z-index: 10; font-size: 0.83rem; }
+        .comparison-table tbody tr:nth-child(even) td { background: #fafafa; }
+        .comparison-table tbody tr:hover td { background: #eff6ff; }
+        .comparison-table td { padding: 12px 14px; vertical-align: top; font-size: 0.82rem; line-height: 1.55; border-bottom: 1px solid #f1f5f9; }
+        .comparison-table td:first-child { font-weight: 700; font-size: 0.78rem; color: #475569; background: #f8fafc !important; }
+
+        .status-good { color: #16a34a; font-weight: 700; }
+        .status-mid  { color: #d97706; font-weight: 600; }
+        .status-bad  { color: #dc2626; }
+
+        code { background: #e2e8f0; padding: 1px 5px; border-radius: 4px; font-family: 'Courier New', monospace; font-size: 0.85em; color: #1e293b; }
+
+        .callout { border-right: 4px solid; border-radius: 0.75rem; padding: 1rem 1.25rem; }
+        .callout-blue   { border-color: #3b82f6; background: #eff6ff; }
+        .callout-yellow { border-color: #f59e0b; background: #fffbeb; }
+        .callout-red    { border-color: #ef4444; background: #fef2f2; }
+        .callout-green  { border-color: #22c55e; background: #f0fdf4; }
+
+        .section-label { display: flex; align-items: center; gap: 10px; font-size: 0.7rem; font-weight: 800; letter-spacing: 0.1em; text-transform: uppercase; color: #94a3b8; margin-bottom: 1rem; }
+        .section-label::before, .section-label::after { content: ''; flex: 1; height: 1px; background: #e2e8f0; }
+
+        .timeline-item { position: relative; padding-right: 2rem; }
+        .timeline-item::before { content: ''; position: absolute; right: 0; top: 6px; width: 12px; height: 12px; border-radius: 50%; background: var(--blue-mid); }
+        .timeline-item::after { content: ''; position: absolute; right: 5px; top: 18px; width: 2px; height: calc(100% - 10px); background: #dbeafe; }
+        .timeline-item:last-child::after { display: none; }
+
+        .highlight-box { background: linear-gradient(135deg, #1e3a5f, #1e40af); color: white; border-radius: 1.5rem; }
+    </style>
+</head>
+<body class="text-slate-700 leading-relaxed">
+
+<!-- ===== HEADER ===== -->
+<header class="header-bg text-white py-20 px-6 shadow-2xl">
+    <div class="max-w-5xl mx-auto text-center relative z-10">
+        <div class="inline-flex items-center gap-2 bg-blue-500/20 border border-blue-400/30 text-blue-200 text-xs px-4 py-1.5 rounded-full mb-6 font-bold tracking-widest uppercase">
+            <span class="w-1.5 h-1.5 bg-blue-300 rounded-full animate-pulse"></span>
+            Version 0.4
+        </div>
+        <h1 class="text-4xl md:text-6xl font-black mb-5 leading-tight">מדריך כלי ה-AI Agentic</h1>
+        <p class="text-xl md:text-2xl text-blue-100 font-light">
+            מצ'אט פשוט ועד סביבת פיתוח אוטונומית - עושים סדר במהפכה
+        </p>
+        <div class="mt-8 flex flex-wrap justify-center gap-3 text-xs font-semibold">
+            <span class="bg-white/10 border border-white/20 px-3 py-1 rounded-full">Claude Code</span>
+            <span class="bg-white/10 border border-white/20 px-3 py-1 rounded-full">Cursor</span>
+            <span class="bg-white/10 border border-white/20 px-3 py-1 rounded-full">Antigravity</span>
+            <span class="bg-white/10 border border-white/20 px-3 py-1 rounded-full">GPT / Claude / Gemini</span>
+        </div>
+    </div>
+</header>
+
+<!-- ===== NAVIGATION ===== -->
+<nav class="sticky-nav py-3 mb-10">
+    <div class="max-w-6xl mx-auto px-4 flex justify-around text-sm font-bold overflow-x-auto gap-6 whitespace-nowrap">
+        <a href="#intro"           class="nav-link">הקונספט</a>
+        <a href="#tools"           class="nav-link">הכלים לעומק</a>
+        <a href="#deep-comparison" class="nav-link">טבלת השוואה</a>
+        <a href="#start"           class="nav-link">איך מתחילים</a>
+        <a href="#usecases"        class="nav-link">מי יכול לעשות מה והגדרות</a>
+        <a href="#contact"         class="nav-link">צור קשר</a>
+    </div>
+</nav>
+
+<main class="max-w-6xl mx-auto px-6 pb-28 space-y-24">
+
+    <!-- ===== INTRO ===== -->
+    <section id="intro">
+        <div class="section-label"><span>הבסיס</span></div>
+        <div class="card p-8 border-r-8 border-blue-500">
+            <h2 class="text-3xl font-black mb-3 text-slate-800">הבהרה קריטית: אלו לא אותן השכבות</h2>
+            <p class="text-base text-slate-600 mb-8">
+                העולם מתחלק כיום לשלוש רמות עבודה. חשוב להבין איפה אתם נמצאים כדי לא "לירות בצרעה עם תותח":
+            </p>
+            <div class="grid md:grid-cols-3 gap-6 mt-8 text-center">
+
+                <div class="bg-orange-50 p-6 rounded-xl border border-orange-100">
+                    <div class="text-3xl mb-3">🧠</div>
+                    <h4 class="font-bold text-orange-800 mb-2">המוח (The Brain)</h4>
+                    <p class="text-sm">צ'אטים כמו <strong>Claude, ChatGPT, Gemini</strong>. הם חושבים איתך, מתכננים וכותבים קטעי קוד, אבל לא "נוגעים" בקבצים שלך. אבל, אמנם בגרסת הצ'אט הפשוטה והראשונית שכולנו מכירים הם לא ניגשים לקבצים שלכם במחשב או באפליקציה, ישנן יכולות שכן מאפשרות להם לעשות דברים שקצת מטשטשים את הגבולות באמצעות אינטגרציות עם כלים צד ג' שכן משפיעים על הקבצים המקומיים.
+                    Codex לדוגמה, Google AI Studio - יכולים לדבר עם ריפוזיטורי וליצור ולשנות קבצי פרויקט פיתוח. זו גם המטרה שלהם - להיות עוזר פיתוח.
+                    לכל אחד יש את ה"קטע" שלו שמייחד אותו.</p>
+                </div>
+
+                <div class="bg-indigo-50 p-6 rounded-xl border border-indigo-100">
+                    <div class="text-3xl mb-3">🛠️</div>
+                    <h4 class="font-bold text-indigo-800 mb-2">הידיים (The Agents)</h4>
+                    <p class="text-sm">כלים כמו <strong>Claude Code</strong>. הם סוכנים שרצים בתוך המערכת שלך ומבצעים פקודות בשמך. מדובר בשכבה שיושבת "מעל" - של סוכנים שיכולים לבצע פקודות בשמך. המשתמש עדיין "מדבר" בשפה שלו. אבל היכולות של הסוכן שונות מאלה של הצ'אטים.</p>
+                </div>
+
+                <div class="bg-purple-50 p-6 rounded-xl border border-purple-100">
+                    <div class="text-3xl mb-3">🏠</div>
+                    <h4 class="font-bold text-purple-800 mb-2">הבית (Agentic IDE)</h4>
+                    <p class="text-sm">סביבות כמו <strong>Cursor ו-Antigravity</strong>. כאן הכל קורה במקום אחד - הקוד, הצ'אט, והסוכן שמריץ הכל. זו הפלטפורמה, המעטפת, שמאפשרת לכם גם לדבר עם הסוכנים וגם לגעת בקוד, אם תרצו. היכולות של הפלטפורמה מאפשרות לה ליצור הכל מאפס, לצרכי פיתוח. החל משלב התכנון, הלאה לסקיצה, מחקרי שוק, אפילו תמונות, צילומי מסך, בדיקות QA ובסוף גם להביא את זה לסביבת Production בזכות אינטגרציות רבות שיש לפלטפורמות הללו.
+                    ל-Antigravity גישה למודלים מתקדמים מאוד והיא יחסית נרחבת לעומת הנהוג בשוק. לכן, ניתן למקסם את יכולות המודלים עצמם.</p>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- ===== TOOLS ===== -->
+    <section id="tools" class="space-y-10">
+        <div class="section-label"><span>צלילה לעומק</span></div>
+        <h2 class="text-3xl font-black text-center text-slate-800">ארבעת הכלים - מה באמת קורה בפנים</h2>
+
+        <!-- Layer 1: The Brains -->
+        <div class="card p-8 border-t-4 border-amber-400">
+            <div class="flex flex-wrap gap-2 mb-5">
+                <span class="tool-tag bg-amber-100 text-amber-700">Layer 1 - The Brains</span>
+                <span class="tool-tag bg-green-100 text-green-700">ללא התקנה</span>
+            </div>
+            <h3 class="text-2xl font-black text-amber-800 mb-4">1. Web Chats: Claude, ChatGPT, Gemini</h3>
+            <p class="mb-4 text-slate-600">אלו הפלטפורמות שכולם מכירים. נגישות מהדפדפן, ללא התקנה.</p>
+            <ul class="list-disc list-inside space-y-2 text-slate-700 mb-6">
+                <li><strong>ChatGPT (OpenAI):</strong> הוותיק. חזק בלוגיקה ובאינטגרציות עם כלים כמו Canva, GitHub ועוד.</li>
+                <li><strong>Claude (Anthropic):</strong> מצטיין בכתיבה ובדיוק גבוה בהוראות ובקוד.</li>
+                <li><strong>Gemini (Google):</strong> חזק מאוד בטיפול בכמויות ענקיות של מידע - חלון קונטקסט גדול במיוחד.</li>
+            </ul>
+
+            <div class="callout callout-yellow text-sm">
+                <strong>💡 מתי להשתמש?</strong>
+                <ul class="mt-3 space-y-2 text-slate-700">
+                    <li>- כשצריך לחשוב על רעיון, לכתוב טקסטים, לשאול "איך עושים X" - בלי להוריד שום דבר.</li>
+                    <li>- <strong>מוקאפים ופרוטוטייפים:</strong> "תבנה לי אפליקציה אינטראקטיבית" - כדי לראות את הרעיון תופס חיים. הכלים האלה מחזירים קבצים שאפשר ממש לקחת, להטמיע ולהפוך לאתר או דף נחיתה בצורה פשוטה.</li>
+                    <li>- <strong>מחקרי שוק:</strong> סקירת מתחרים, ניתוח טקסטים, סיכום מסמכים.</li>
+                    <li>- <strong>ניתוח ותכנון:</strong> קבלת החלטות, ניסוח, הכנת מצגות.</li>
+                    <li>- ועוד - ממשיכים לגלות כל הזמן.</li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- Layer 2: Claude Code -->
+        <div class="card p-8 border-t-4 border-slate-400">
+            <div class="flex flex-wrap gap-2 mb-5">
+                <span class="tool-tag bg-slate-200 text-slate-700">Layer 2 - CLI Agent</span>
+            </div>
+            <h3 class="text-2xl font-black text-slate-800 mb-4">2. Claude Code - הסוכן בשורת הפקודה</h3>
+            <p class="mb-4 text-slate-600">
+                Claude Code הוא כלי של Anthropic שרץ ישירות בטרמינל שלך. הוא לא IDE - הוא סוכן שמדבר עם הקוד שלך ישירות, מבצע שינויים, מריץ פקודות, וכותב בדיקות.
+            </p>
+            <ul class="list-disc list-inside space-y-2 text-slate-700 mb-6">
+                <li><strong>מודלים:</strong> מבוסס על מודלי Claude של Anthropic.</li>
+                <li><strong>מתאים למתחילים?</strong> לא מומלץ ללא רקע טכני. דורש היכרות עם הטרמינל ושורת הפקודה. אם הטרמינל לא מוכר לך - כדאי להתחיל עם Cursor.</li>
+                <li><strong>לאילו משימות מצטיין:</strong> תיקון באגים בפרויקט קיים, Refactoring, כתיבת בדיקות אוטומטיות, ביצוע שינויים גדולים בקוד בפקודה אחת.</li>
+            </ul>
+            <div class="callout callout-red text-sm">
+                ⚠️ <strong>שורה תחתונה:</strong> כלי עוצמתי מאוד - אבל בידיים של מי שמבין קוד. למי שמגיע בלי רקע - יש כלים ידידותיים יותר.
+            </div>
+        </div>
+
+        <!-- Cursor + Antigravity -->
+        <div class="grid md:grid-cols-2 gap-8">
+
+            <div class="card p-8 border-t-4 border-blue-500">
+                <h3 class="text-2xl font-bold text-blue-900 mb-4 italic">3. Cursor</h3>
+                <p class="text-sm mb-4">ה-IDE הפופולרי ביותר כיום. הוא נראה ומרגיש כמו VS Code (העורך המקובל בעולם) אבל עם "סוכן" מובנה בשם Composer שיכול לכתוב פרויקטים שלמים מאפס.</p>
+                <div class="text-xs font-bold text-slate-500 uppercase mb-2 italic">יתרון מרכזי:</div>
+                <p class="text-sm">חוויית משתמש  נוחה וחלקה, מתקדמת. צבר כבר זמן בשוק ומשתמשים רבים. פופולארי ומבוקש ושינה את חוקי המשחק כי הוא השילוב המושלם לצרכים רבים וקהל רחב שלא פגש קוד לקחת רעיון ולצאת עם - בום! ויש גם פומו, כמו תמיד .</p>
+            </div>
+
+            <div class="card p-8 border-t-4 border-red-500">
+                <h3 class="text-2xl font-bold text-red-900 mb-4 italic">4. Google Antigravity</h3>
+                <p class="text-sm mb-4">התשובה של גוגל ל-Cursor. הוא מתמקד בניהול סוכנים מרובים על פני כמה פרויקטים (Workspaces) במקביל, עם יכולת לשלוט בדפדפן כדי לבדוק את האתר שהסוכן בנה.</p>
+                <div class="text-xs font-bold text-slate-500 uppercase mb-2 italic">יתרון מרכזי:</div>
+                <p class="text-sm">אורקסטרציה חזקה ושליטה בדפדפן "כמו בן אדם". מדובר בכלי מאוד דומה למתחרה שלו. גוגל שחררו אותו כ"תשובה" למתחרה ובינתיים, הוא חינמי, עדיין נחשב לבטא. בעתיד ייתכן וייגבה עבורו תשלום</p>
+            </div>
+             <div class="callout callout-red text-sm">
+                ⚠️ <strong>חשוב להבין</strong> שניהם - הם סביבת העבודה. הארגז. יש מגרות, קומות, אפשר להזיז ולשחק. יכלי העבודה בפועל - המברגים השונים נקרא לזה- אלה המודלים. אם כך, שתי הפלטפורמות מאפשר גישה למודלים. המשתמש יכול לבחור ברמת הצט אם הוא רוצה לעבוד עם מודל אחד ובצט אחד להחליף מודל וגם באמצע הצט. זה מאפשר גמישות רבה. אבל כמות הקרדיטים החינמיים שונה ממודל למודל ובין הפלטפורמות עצמן. באנטיגרביטי לדוגמא מודל Flash כנראה יספיק לנצח ומתחדש כל 4 שעות. יתר המודלים החזקים של שאר המוחות מתומחרים אחרת ולמרות זאת, אפשר להקים ולפתח המון עם מה שמקבלים, כולל עם Sonnet. מחירים ניתן לראות באתרים בדיוק כמה כל מודל עולה וכמובן ניתן לרכוש עוד קרדיטים לשימוש בתוך הפלטפורמה. 
+            </div>
+
+        </div>
+    </section>
+
+    <!-- ===== COMPARISON TABLE ===== -->
+    <section id="deep-comparison">
+        <div class="section-label"><span>השוואה מפורטת</span></div>
+        <h2 class="text-3xl font-black text-center text-slate-800 mb-8">טבלת השוואה - למשתמש הקצה</h2>
+
+        <div class="overflow-x-auto shadow-xl rounded-2xl border border-slate-200">
+            <table class="w-full text-right bg-white comparison-table">
+                <thead>
+                    <tr class="border-b-2 border-slate-200">
+                        <th class="p-4 w-1/5 bg-slate-100 text-slate-600 text-right">הפרמטר</th>
+                        <th class="p-4 text-amber-700 bg-amber-50 text-center">
+                            🧠 Web Chats<br><span class="font-normal text-xs">(GPT / Claude / Gemini)</span>
+                        </th>
+                        <th class="p-4 text-slate-700 bg-slate-50 text-center">
+                            ⌨️ Claude Code<br><span class="font-normal text-xs">(CLI)</span>
+                        </th>
+                        <th class="p-4 text-blue-700 bg-blue-50 text-center">
+                            🖥️ Cursor<br><span class="font-normal text-xs">(Agentic IDE)</span>
+                        </th>
+                        <th class="p-4 text-red-700 bg-red-50 text-center">
+                            🚀 Antigravity<br><span class="font-normal text-xs">(Agentic IDE)</span>
+                        </th>
+                    </tr>
+                </thead>
+                <tbody>
+
+                    <tr>
+                        <td>אילו מודלים זמינים?</td>
+                        <td>כל פלטפורמה מגיעה עם המודל שלה בלבד</td>
+                        <td>מודלי Claude של Anthropic</td>
+                        <td>גמיש - ניתן לבחור בין מספר מודלים מובילים מחברות שונות</td>
+                        <td>גישה נרחבת יחסית לשוק, כולל מודלים מתקדמים</td>
+                    </tr>
+
+                    <tr>
+                        <td>למה הוא מתאים לבנות?</td>
+                        <td>טקסטים, לוגיקה, מחקר, פרוטוטייפים, קטעי קוד בודדים</td>
+                        <td>תיקון באגים, Refactoring, כתיבת טסטים בפרויקט קיים</td>
+                        <td>
+                            אתרים, אפליקציות, מערכות מורכבות.<br>
+                            <span class="text-slate-400 text-xs">לא מתאים במיוחד: אוטומציה של דפדפן, workflows מרובי-סוכנים</span>
+                        </td>
+                        <td>
+                            אתרים, אפליקציות, Workflows מורכבים, אוטומציה של דפדפן.<br>
+                            <span class="text-slate-400 text-xs">לא מתאים במיוחד: פרויקטים שדורשים בחירת מודלים גמישה</span>
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <td>בלי ידע קוד אסתדר?</td>
+                        <td><span class="status-good">כן לגמרי</span> - ממשק שיחה פשוט</td>
+                        <td><span class="status-bad">לא מומלץ</span> - דורש היכרות עם הטרמינל</td>
+                        <td><span class="status-mid">אפשרי</span> - עקומת למידה קלה, שבוע-שבועיים</td>
+                        <td><span class="status-mid">אפשרי</span> - עקומת למידה קלה, שבוע-שבועיים</td>
+                    </tr>
+
+                    <tr>
+                        <td>זה כמו לדבר עם צ'אט?</td>
+                        <td><span class="status-good">כן</span> - שיחה רגילה ומוכרת</td>
+                        <td><span class="status-bad">לא</span> - פקודות טקסטואליות בטרמינל</td>
+                        <td><span class="status-good">כן</span> - הצ'אט מבצע שינויים ישירות בקבצים</td>
+                        <td><span class="status-good">כן</span> - הצ'אט מבצע שינויים ישירות בקבצים</td>
+                    </tr>
+
+                    <tr>
+                        <td>זיכרון וקונטקסט</td>
+                        <td>היסטוריית שיחות בתוך הצ'אט</td>
+                        <td>רואה רק את הפרויקט הנוכחי - אין זיכרון בין ריצות</td>
+                        <td>אין זיכרון אישי, אבל ניתן להגדיר עדיפויות קבועות לפרויקט</td>
+                        <td>Knowledge Items - זיכרון מתמשך של סגנון, העדפות ופרויקטים</td>
+                    </tr>
+
+                    <tr>
+                        <td>כמה עולה?</td>
+                        <td>חינם עם הגבלות, מנוי בתשלום לגרסה מורחבת</td>
+                        <td>לפי שימוש (API) - העלות משתנה בהתאם לכמות השימוש. שימו לב שזה יכול לעלות מהר</td>
+                        <td>חינם (מוגבל) או מנוי בתשלום לגרסה מלאה</td>
+                        <td>חינם בבטא כרגע - גישה מוגבלת</td>
+                    </tr>
+
+                    <tr>
+                        <td>מתאים לאתר דף אחד?</td>
+                        <td><span class="status-good">כן</span> - תצטרך לאחסן לבד</td>
+                        <td><span class="status-good">כן</span> - מצוין לאתרים סטטיים</td>
+                        <td><span class="status-good">כן, מומלץ מאוד</span></td>
+                        <td><span class="status-good">כן, מומלץ מאוד</span></td>
+                    </tr>
+
+                    <tr>
+                        <td>אחסון ודומיין (Deploy)</td>
+                        <td class="text-xs">לא כולל. חיבור ידני ל-Netlify / Vercel / GitHub Pages</td>
+                        <td class="text-xs">לא כולל. דורש הגדרה ידנית</td>
+                        <td class="text-xs">חיבור פשוט ל-Vercel ולפלטפורמות אחסון נוספות מתוך הממשק</td>
+                        <td class="text-xs">חיבור פשוט ל-Google Cloud ולפלטפורמות אחסון מתוך הממשק</td>
+                    </tr>
+
+                    <tr>
+                        <td>אפליקציית מובייל?</td>
+                        <td><span class="status-bad">לא</span> - רק קטעי קוד לדוגמה</td>
+                        <td><span class="status-mid">כן</span> - דורש ידע טכני</td>
+                        <td><span class="status-good">כן - בחירה מועדפת</span></td>
+                        <td><span class="status-good">כן</span></td>
+                    </tr>
+
+                    <tr>
+                        <td>מה הכי חזק בו?</td>
+                        <td>מהירות, פשטות, אפס התקנה - הכי קל לרעיונות ראשוניים</td>
+                        <td>עבודה ישירה וחזקה עם קוד קיים ללא צורך ב-IDE</td>
+                        <td>חוויית פיתוח שלמה ב-IDE אחד עם חיבור קל לסביבת ייצור</td>
+                        <td>שליטה בדפדפן, ניהול סוכנים מרובים, וזיכרון מתמשך</td>
+                    </tr>
+
+                    <tr>
+                        <td>מה הנקודה החלשה?</td>
+                        <td class="text-xs">לא בונה פרויקט שלם לבד. צריך להעתיק ולהדביק קוד ידנית</td>
+                        <td class="text-xs">לא מתאים למתחילים. דורש הבנה טכנית וניהול עלויות API</td>
+                        <td class="text-xs">עלול להיות "כבד" למשימות פשוטות. הגרסה החינמית מוגבלת</td>
+                        <td class="text-xs">עדיין בבטא - פחות מלוטש. גישה מוגבלת</td>
+                    </tr>
+
+                </tbody>
+            </table>
+        </div>
+    </section>
+
+    <!-- ===== GETTING STARTED ===== -->
+    <section id="start">
+        <div class="section-label"><span>מדריך מעשי</span></div>
+        <h2 class="text-3xl font-black text-center text-slate-800 mb-8">איך מתחילים - מדריך שלב-שלב</h2>
+
+        <div class="grid md:grid-cols-2 gap-8">
+
+            <!-- Cursor -->
+            <div class="card p-8 border-t-4 border-blue-500">
+                <h3 class="text-xl font-black text-blue-800 mb-5">🖥️ Cursor - הכי קל להתחיל</h3>
+                <div class="space-y-5">
+                    <div class="timeline-item pb-5">
+                        <div class="font-bold text-slate-800 text-sm mb-1">שלב 1: הורדה</div>
+                        <p class="text-xs text-slate-600">נכנסים ל-<code>cursor.com</code>, לוחצים Download. קובץ התקנה רגיל. עובד על Mac, Windows, Linux.</p>
+                    </div>
+                    <div class="timeline-item pb-5">
+                        <div class="font-bold text-slate-800 text-sm mb-1">שלב 2: פתיחת פרויקט</div>
+                        <p class="text-xs text-slate-600">פותחים את Cursor, יוצרים תיקייה חדשה (New Folder) - זה יהיה הפרויקט שלכם.</p>
+                    </div>
+                    <div class="timeline-item pb-5">
+                        <div class="font-bold text-slate-800 text-sm mb-1">שלב 3: פתיחת הסוכן (Composer)</div>
+                        <p class="text-xs text-slate-600">לוחצים <code>Ctrl+I</code> (Windows) או <code>Cmd+I</code> (Mac). מופיע חלון הצ'אט של הסוכן.</p>
+                    </div>
+                    <div class="timeline-item pb-5">
+                        <div class="font-bold text-slate-800 text-sm mb-1">שלב 4: הבקשה הראשונה</div>
+                        <p class="text-xs text-slate-600">כותבים בעברית או באנגלית, לדוגמה: <em>"Build me a modern landing page for a yoga studio with a booking form"</em> - הסוכן מתחיל לכתוב קבצים.</p>
+                    </div>
+                    <div class="timeline-item">
+                        <div class="font-bold text-slate-800 text-sm mb-1">שלב 5: העלאה לאוויר</div>
+                        <p class="text-xs text-slate-600">מחברים חשבון Vercel (חינם) ולוחצים Deploy - האתר עולה עם דומיין זמני.</p>
+                    </div>
+                </div>
+                <div class="callout callout-green text-xs mt-5">
+                    ⏱️ <strong>זמן מוערך: 15-25 דקות</strong> מהורדה ועד אתר שרץ באינטרנט.
+                </div>
+            </div>
+
+            <!-- Claude Code -->
+            <div class="card p-8 border-t-4 border-slate-400">
+                <h3 class="text-xl font-black text-slate-700 mb-1">⌨️ Claude Code - למשתמשים טכניים</h3>
+                <div class="callout callout-red text-xs mb-5 mt-3">
+                    ⚠️ <strong>לא מומלץ למתחילים ללא רקע.</strong> אם הטרמינל לא מוכר לך - תתחיל עם Cursor.
+                </div>
+                <div class="space-y-4">
+                    <div class="timeline-item pb-4">
+                        <div class="font-bold text-slate-700 text-sm mb-1">דרישה מוקדמת</div>
+                        <p class="text-xs text-slate-600">Node.js מותקן על המחשב ומפתח API מחשבון Anthropic.</p>
+                    </div>
+                    <div class="timeline-item pb-4">
+                        <div class="font-bold text-slate-700 text-sm mb-1">שלב 1: התקנה בטרמינל</div>
+                        <p class="text-xs font-mono bg-slate-100 p-2 rounded text-slate-700">npm install -g @anthropic-ai/claude-code</p>
+                    </div>
+                    <div class="timeline-item pb-4">
+                        <div class="font-bold text-slate-700 text-sm mb-1">שלב 2: הגדרת API Key</div>
+                        <p class="text-xs text-slate-600">מגדירים את ה-API Key כמשתנה סביבה בטרמינל.</p>
+                    </div>
+                    <div class="timeline-item pb-4">
+                        <div class="font-bold text-slate-700 text-sm mb-1">שלב 3: הפעלה</div>
+                        <p class="text-xs text-slate-600">ניגשים לתיקיית הפרויקט ומריצים: <code>claude</code>. מתחיל צ'אט עם גישה לכל הקבצים.</p>
+                    </div>
+                    <div class="timeline-item">
+                        <div class="font-bold text-slate-700 text-sm mb-1">שלב 4: בקשה ראשונה</div>
+                        <p class="text-xs text-slate-600">כותבים לדוגמה <em>"Fix all the TypeScript errors in this project"</em> - הסוכן סורק ומתקן.</p>
+                    </div>
+                </div>
+                <div class="callout callout-yellow text-xs mt-5">
+                    ⏱️ <strong>זמן מוערך: 20-40 דקות</strong> כולל הגדרת הסביבה לראשונה.
+                </div>
+            </div>
+
+            <!-- Web Chats -->
+            <div class="card p-8 border-t-4 border-amber-400">
+                <h3 class="text-xl font-black text-amber-800 mb-5">🧠 Web Chats - כבר יודעים, אבל...</h3>
+                <p class="text-sm text-slate-600 mb-4">אם כבר משתמשים בצ'אטים - כמה טיפים שישדרגו אתכם מיד:</p>
+                <div class="space-y-3">
+                    <div class="bg-amber-50 p-3 rounded-lg text-xs">
+                        <strong>תנו קונטקסט מלא בהתחלה:</strong> "אני בונה אתר לפיזיותרפיסט, קהל יעד מבוגרים. צריך עיצוב פשוט ונקי. בנה HTML+CSS+JS מלא" - לא "תבנה לי אתר".
+                    </div>
+                    <div class="bg-amber-50 p-3 rounded-lg text-xs">
+                        <strong>השתמשו ב-Claude לקוד:</strong> Claude מצטיין בדיוק ובעקיבה אחרי הוראות ארוכות - מומלץ לניסיונות ראשונים בקוד.
+                    </div>
+                    <div class="bg-amber-50 p-3 rounded-lg text-xs">
+                        <strong>Gemini לניתוח מסמכים גדולים:</strong> חוזה, spreadsheet ענקי, מסמכים ארוכים - Gemini עם חלון הקונטקסט הגדול שלו הוא הבחירה.
+                    </div>
+                    <div class="bg-amber-50 p-3 rounded-lg text-xs">
+                        <strong>GPT לאינטגרציות:</strong> אם כבר יש מנוי - הכלים המחוברים כמו Canva ו-GitHub שווים ניסיון.
+                    </div>
+                </div>
+                <div class="callout callout-green text-xs mt-5">
+                    ⏱️ <strong>זמן עד תוצאה ראשונה: 2-5 דקות.</strong> פשוט מתחילים לכתוב.
+                </div>
+            </div>
+
+            <!-- Antigravity -->
+            <div class="card p-8 border-t-4 border-red-500">
+                <h3 class="text-xl font-black text-red-800 mb-5">🚀 Antigravity - גישה בבטא</h3>
+                <p class="text-sm text-slate-600 mb-4">
+                    חשוב לדעת: הכלי בבטא עם גישה מוגבלת - יתכן שתצטרכו להצטרף לרשימת המתנה.
+                </p>
+                <div class="space-y-4">
+                    <div class="timeline-item pb-4">
+                        <div class="font-bold text-slate-700 text-sm mb-1">שלב 1: גישה</div>
+                        <p class="text-xs text-slate-600">זמין דרך Chrome או הורדה ייעודית. מצריך חשבון Google.</p>
+                    </div>
+                    <div class="timeline-item pb-4">
+                        <div class="font-bold text-slate-700 text-sm mb-1">שלב 2: יצירת Workspace</div>
+                        <p class="text-xs text-slate-600">פותחים Workspace חדש ומגדירים Knowledge Items - מה שהסוכן יזכור תמיד לגבי הפרויקטים שלכם.</p>
+                    </div>
+                    <div class="timeline-item">
+                        <div class="font-bold text-slate-700 text-sm mb-1">שלב 3: עבודה</div>
+                        <p class="text-xs text-slate-600">הממשק קרוב מאוד ל-Cursor - יש IDE, טרמינל, סוכן וצ'אט. ההבדל המרכזי: שליטה בדפדפן וסוכנים מרובים.</p>
+                    </div>
+                </div>
+                <div class="callout callout-green text-xs mt-5">
+                    ⏱️ <strong>זמן מוערך: 10-20 דקות</strong> אחרי שיש גישה.
+                </div>
+            </div>
+
+        </div>
+    </section>
+
+    <!-- ===== USE CASES ===== -->
+    <section id="usecases">
+        <div class="section-label"><span>קבלת החלטות</span></div>
+        <h2 class="text-3xl font-black text-center text-slate-800 mb-8">מי יכול לעשות מה</h2>
+
+        <div class="grid md:grid-cols-2 gap-5">
+
+            <div class="card p-6">
+                <div class="text-2xl mb-2">🌐</div>
+                <h4 class="font-black text-slate-800 mb-2">אתר תדמית / דף נחיתה</h4>
+                <p class="text-sm text-slate-500 mb-3">לעסק, מוצר, אירוע</p>
+                <div class="flex flex-wrap gap-2">
+                    <span class="text-xs bg-blue-50 text-blue-700 border border-blue-200 px-3 py-1 rounded-full font-semibold">Cursor</span>
+                    <span class="text-xs bg-red-50 text-red-700 border border-red-200 px-3 py-1 rounded-full font-semibold">Antigravity</span>
+                    <span class="text-xs bg-amber-50 text-amber-700 border border-amber-200 px-3 py-1 rounded-full font-semibold">Web Chat (לדפים פשוטים)</span>
+                </div>
+            </div>
+
+            <div class="card p-6">
+                <div class="text-2xl mb-2">📱</div>
+                <h4 class="font-black text-slate-800 mb-2">אפליקציית מובייל</h4>
+                <p class="text-sm text-slate-500 mb-3">React Native / Flutter</p>
+                <div class="flex flex-wrap gap-2">
+                    <span class="text-xs bg-blue-50 text-blue-700 border border-blue-200 px-3 py-1 rounded-full font-semibold">Cursor (מומלץ)</span>
+                    <span class="text-xs bg-red-50 text-red-700 border border-red-200 px-3 py-1 rounded-full font-semibold">Antigravity</span>
+                    <span class="text-xs bg-slate-100 text-slate-600 border border-slate-200 px-3 py-1 rounded-full font-semibold">Claude Code (קשה יותר)</span>
+                </div>
+            </div>
+
+            <div class="card p-6">
+                <div class="text-2xl mb-2">🤖</div>
+                <h4 class="font-black text-slate-800 mb-2">אוטומציות ו-Workflows</h4>
+                <p class="text-sm text-slate-500 mb-3">תהליכים אוטומטיים, שליטה בדפדפן, QA</p>
+                <div class="flex flex-wrap gap-2">
+                    <span class="text-xs bg-red-50 text-red-700 border border-red-200 px-3 py-1 rounded-full font-semibold">Antigravity (מומלץ)</span>
+                    <span class="text-xs bg-slate-100 text-slate-600 border border-slate-200 px-3 py-1 rounded-full font-semibold">Claude Code (קשה יותר)</span>
+                </div>
+            </div>
+
+            <div class="card p-6">
+                <div class="text-2xl mb-2">🐛</div>
+                <h4 class="font-black text-slate-800 mb-2">תיקון קוד קיים</h4>
+                <p class="text-sm text-slate-500 mb-3">Refactoring, באגים, בדיקות</p>
+                <div class="flex flex-wrap gap-2">
+                    <span class="text-xs bg-blue-50 text-blue-700 border border-blue-200 px-3 py-1 rounded-full font-semibold">Cursor</span>
+                    <span class="text-xs bg-slate-100 text-slate-600 border border-slate-200 px-3 py-1 rounded-full font-semibold">Claude Code (קשה יותר)</span>
+                </div>
+            </div>
+
+            <div class="card p-6">
+                <div class="text-2xl mb-2">📊</div>
+                <h4 class="font-black text-slate-800 mb-2">ניתוח מסמכים / נתונים</h4>
+                <p class="text-sm text-slate-500 mb-3">חוזים, דוחות, טבלאות, מחקרי שוק</p>
+                <div class="flex flex-wrap gap-2">
+                    <span class="text-xs bg-amber-50 text-amber-700 border border-amber-200 px-3 py-1 rounded-full font-semibold">Gemini (מומלץ)</span>
+                    <span class="text-xs bg-amber-50 text-amber-700 border border-amber-200 px-3 py-1 rounded-full font-semibold">Claude Web</span>
+                </div>
+            </div>
+
+            <div class="card p-6">
+                <div class="text-2xl mb-2">✍️</div>
+                <h4 class="font-black text-slate-800 mb-2">תוכן, רעיונות, פרוטוטייפים</h4>
+                <p class="text-sm text-slate-500 mb-3">שיווק, כתיבה, מוקאפים, תכנון</p>
+                <div class="flex flex-wrap gap-2">
+                    <span class="text-xs bg-amber-50 text-amber-700 border border-amber-200 px-3 py-1 rounded-full font-semibold">Claude Web (מומלץ)</span>
+                    <span class="text-xs bg-amber-50 text-amber-700 border border-amber-200 px-3 py-1 rounded-full font-semibold">GPT</span>
+                    <span class="text-xs bg-amber-50 text-amber-700 border border-amber-200 px-3 py-1 rounded-full font-semibold">Gemini</span>
+                </div>
+            </div>
+
+        </div>
+    </section>
+
+    <!-- ===== SUMMARY ===== -->
+    <section>
+        <div class="highlight-box p-10 md:p-14">
+            <h2 class="text-3xl font-black mb-8 text-center">שורה תחתונה</h2>
+            <div class="grid md:grid-cols-2 gap-10">
+
+                <div>
+                    <h4 class="text-lg font-black mb-4 text-blue-200">💬 מה אומרים אנשים?</h4>
+
+                    <div class="mb-5">
+                        <div class="font-bold text-white text-sm mb-1">Cursor</div>
+                        <p class="text-blue-100 text-sm">משתמשים רבים מתארים אותו כסביבת עבודה נוחה מאוד למי שרוצים לבנות עם AI מתוך ממשק שמרגיש כמו IDE (חלון צ'אט סוכן) אמיתי, אוהבים במיוחד את הזרימה עם הקבצים והסוכן, וחלקם מציינים שמי שלא מגיעים מרקע טכני עדיין עלולים להרגיש הצפה בהתחלה.</p>
+                    </div>
+
+                    <div class="mb-5">
+                        <div class="font-bold text-white text-sm mb-1">Claude Code</div>
+                        <p class="text-blue-100 text-sm">מי שאוהבים לעבוד קרוב לקוד ולטרמינל נוטים לתאר אותו ככלי חזק מאוד. אחרים מרגישים שהוא פחות "ידידותי למתחילים" ודורש יותר ביטחון טכני.</p>
+                    </div>
+
+                    <div>
+                        <div class="font-bold text-white text-sm mb-1">Antigravity</div>
+                        <p class="text-blue-100 text-sm">משתמשים מסוימים מתארים אותו כחוויה שקרובה יותר ל-Cursor ממה שנדמה במבט ראשון, בגלל שיש בו סוכן, קבצים, IDE וטרמינל.</p>
+                    </div>
+                </div>
+
+                <div>
+                    <h4 class="text-lg font-black mb-4 text-blue-200">🎯 המלצה סופית</h4>
+                    <div class="bg-white/10 border border-white/20 rounded-2xl p-6">
+                        <p class="text-white text-sm leading-relaxed mb-5">
+                            אם אתם רוצים לבנות אתר או אפליקציה ואין לכם מושג בקוד - תתחילו עם <strong>Cursor</strong> או <strong>Antigravity</strong>. כי הם הכי סלחניים, הכי "מדברים איתכם" והכי קל לחבר את הפרויקטים שעשיתם לעולם החיצוני כדי שהאתר שלכם יעלה לאוויר.
+                        </p>
+                        <div class="space-y-2 text-sm">
+                            <div class="flex items-start gap-2">
+                                <span class="text-green-300 font-bold flex-shrink-0">-</span>
+                                <span class="text-blue-100">מתחילים לחלוטין: <strong>Cursor + Vercel</strong></span>
+                            </div>
+                            <div class="flex items-start gap-2">
+                                <span class="text-green-300 font-bold flex-shrink-0">-</span>
+                                <span class="text-blue-100">רוצים לנסות חדש: <strong>Antigravity</strong> (חינם בבטא)</span>
+                            </div>
+                            <div class="flex items-start gap-2">
+                                <span class="text-green-300 font-bold flex-shrink-0">-</span>
+                                <span class="text-blue-100">מפתח עם ניסיון בטרמינל: <strong>Claude Code</strong></span>
+                            </div>
+                            <div class="flex items-start gap-2">
+                                <span class="text-green-300 font-bold flex-shrink-0">-</span>
+                                <span class="text-blue-100">בלי התקנה בכלל - פשוט לכתוב: <strong>הצ'אטים שכולם מכירים</strong></span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- ===== TERMS ===== -->
+    <section id="terms">
+        <div class="section-label"><span>מונחים</span></div>
+        <h2 class="text-2xl font-black mb-6 text-center text-slate-800 italic">מונחים ששווה לזכור</h2>
+        <div class="grid md:grid-cols-3 gap-5">
+
+            <div class="card p-5">
+                <h5 class="font-black mb-2 text-slate-800">סוכן (Agent)</h5>
+                <p class="text-xs text-slate-600">החלק ש"עושה" ולא רק "מדבר". הוא מחליט לבד איזה קובץ לפתוח ואיזו פקודה להריץ.</p>
+            </div>
+
+            <div class="card p-5">
+                <h5 class="font-black mb-2 text-slate-800">Skills</h5>
+                <p class="text-xs text-slate-600">מיומנויות שהסוכן לומד (כמו: איך לשלוח אימייל, איך לבדוק דומיין). אפשר להרחיב את הסוכן עם עוד מיומנויות.</p>
+            </div>
+
+            <div class="card p-5">
+                <h5 class="font-black mb-2 text-slate-800">Composer</h5>
+                <p class="text-xs text-slate-600">ב-Cursor, זה המקום שבו כותבים בקשה גדולה (כמו: "תבנה לי אפליקציית כושר") והוא בונה את כל הקבצים במקביל.</p>
+            </div>
+
+            <div class="card p-5">
+                <h5 class="font-black mb-2 text-slate-800">ריפוזיטורי (Repository)</h5>
+                <p class="text-xs text-slate-600">מחסן קוד - המקום שבו כל קבצי הפרויקט שלכם מאוחסנים ומנוהלים. בדרך כלל ב-GitHub. מאפשר לעקוב אחרי שינויים ולשתף עם אחרים.</p>
+            </div>
+
+            <div class="card p-5">
+                <h5 class="font-black mb-2 text-slate-800">אחסון קוד</h5>
+                <p class="text-xs text-slate-600">המקום שבו יושבים קבצי הקוד של הפרויקט (GitHub, GitLab). שונה מאחסון האתר - זה המטבח, לא החלון הראשי.</p>
+            </div>
+
+            <div class="card p-5">
+                <h5 class="font-black mb-2 text-slate-800">אחסון אתר (Hosting)</h5>
+                <p class="text-xs text-slate-600">השרת שמריץ את האתר שלכם ומגיש אותו למבקרים. פלטפורמות נפוצות: Vercel, Netlify, Google Cloud. זה מה שגורם לאתר להיות נגיש לכולם.</p>
+            </div>
+
+            <div class="card p-5">
+                <h5 class="font-black mb-2 text-slate-800">דומיין</h5>
+                <p class="text-xs text-slate-600">הכתובת של האתר שלכם באינטרנט - לדוגמה yourbusiness.com. קונים אותו בנפרד (Google Domains, GoDaddy ועוד) ומחברים לאחסון האתר.</p>
+            </div>
+
+            <div class="card p-5">
+                <h5 class="font-black mb-2 text-slate-800">דף נחיתה</h5>
+                <p class="text-xs text-slate-600">אתר של עמוד יחיד שנועד לפעולה אחת ברורה - למשל השארת פרטים, קנייה, או הרשמה. בניגוד לאתר מלא עם כמה עמודים וניווט.</p>
+            </div>
+
+            <div class="card p-5">
+                <h5 class="font-black mb-2 text-slate-800">אתר עם עמודים</h5>
+                <p class="text-xs text-slate-600">אתר עם יותר מעמוד אחד - דף הבית, עמוד אודות, שירותים, צור קשר וכו'. מורכב יותר לבנייה ולניהול מדף נחיתה.</p>
+            </div>
+
+            <div class="card p-5">
+                <h5 class="font-black mb-2 text-slate-800">אחסון דאטה-בייס</h5>
+                <p class="text-xs text-slate-600">המקום שבו האתר שומר מידע דינמי - פרטי משתמשים, הזמנות, תוכן שמתעדכן. שונה מאחסון הקוד - זה המידע שהאפליקציה צוברת לאורך זמן.</p>
+            </div>
+
+            <div class="card p-5">
+                <h5 class="font-black mb-2 text-slate-800">Deploy / Production</h5>
+                <p class="text-xs text-slate-600">"העלאה לאוויר" - הרגע שהאתר הופך נגיש לכולם באינטרנט, לא רק אצלכם על המסך.</p>
+            </div>
+
+            <div class="card p-5">
+                <h5 class="font-black mb-2 text-slate-800">Context Window</h5>
+                <p class="text-xs text-slate-600">כמה מידע המודל יכול "להחזיק בראש" בו-זמנית. חלון גדול - יכול לנתח מסמכים ארוכים יותר בבת אחת.</p>
+            </div>
+
+        </div>
+    </section>
+
+    <!-- ===== CONTACT ===== -->
+    <section id="contact" class="card p-12 text-center border-t-4 border-blue-500">
+        <h2 class="text-3xl font-black mb-3 text-blue-900 italic">יש שאלות? רוצים ללמוד עוד?</h2>
+        <p class="text-lg mb-8">העולם הזה זז מהר, אל תישארו מאחור. דברו איתי!</p>
+        <div class="space-y-2 text-xl font-medium">
+            <div class="text-blue-600 font-bold">שיר אורן</div>
+            <div>📞 0547-962965</div>
+            <div>📧 YourWayTrek@gmail.com</div>
+        </div>
+        <div class="mt-8 flex justify-center gap-4 flex-wrap">
+            <span class="bg-blue-100 text-blue-800 px-4 py-2 rounded-full text-sm font-bold">AI Strategy</span>
+            <span class="bg-blue-100 text-blue-800 px-4 py-2 rounded-full text-sm font-bold">No-Code Expert</span>
+            <span class="bg-blue-100 text-blue-800 px-4 py-2 rounded-full text-sm font-bold">Business Growth</span>
+        </div>
+    </section>
+
+</main>
+
+<footer class="bg-slate-900 text-slate-400 py-12 text-center">
+    <p class="mb-2">נבנה בעזרת AI עבור קהילת המפתחים והיזמים - 2025</p>
+    <p class="text-xs opacity-50 italic uppercase tracking-widest">The future is agentic. Are you ready?</p>
+</footer>
+
+<script>
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+        anchor.addEventListener('click', function (e) {
+            e.preventDefault();
+            const target = document.querySelector(this.getAttribute('href'));
+            if (target) target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        });
+    });
+
+    window.addEventListener('scroll', () => {
+        const sections = document.querySelectorAll('section[id]');
+        const navLinks = document.querySelectorAll('.nav-link');
+        let current = '';
+        sections.forEach(section => {
+            if (window.scrollY >= section.offsetTop - 200) current = section.getAttribute('id');
+        });
+        navLinks.forEach(link => {
+            link.classList.remove('active');
+            if (link.getAttribute('href') === '#' + current) link.classList.add('active');
+        });
+    });
+</script>
+
+<script>
+    (function() {
+        const homeBtn = document.createElement('a');
+        homeBtn.innerHTML = '🏠 חזרה לתפריט הראשי';
+        homeBtn.href = '/';
+        homeBtn.style = `
+            position: fixed; bottom: 20px; right: 20px;
+            background: #1e40af; color: white;
+            padding: 10px 20px; border-radius: 999px;
+            text-decoration: none; font-weight: bold;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+            z-index: 1000; font-family: sans-serif; font-size: 0.85rem;
+        `;
+        document.body.appendChild(homeBtn);
+    })();
+</script>
+
+</body>
+</html>
+
+--------------------------------------------------------
+/*
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>מדריך ה-AI למפתחים גרסה 0.2: הכלים שיבנו לכם את הפרויקט הבא</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Assistant:wght@200;400;700&family=Heebo:wght@300;500;800&display=swap" rel="stylesheet">
@@ -66,7 +804,7 @@
                         <h4 class="font-bold text-orange-800 mb-2">המוח (The Brain)</h4>
                         <p class="text-sm">צ'אטים כמו <strong>Claude, ChatGPT, Gemini</strong>. הם חושבים איתך, מתכננים וכותבים קטעי קוד, אבל לא "נוגעים" בקבצים שלך. אבל, אמנם בגרסת הצ'אט הפשוטה והראשונית שכולנו מכירים הם לא ניגשים לקבצים שלכם במחשב או באפליקצייה, ישנן יכולות שכן מאפשרות להם לעשות דברים שקצת מטשטשים את הגבולות באמצעות אינטגרציות עם כלים צד ג' שכן משפיעים על הקבצים המקומיים. 
 Codex לדוג', Googl AI Studio - יכולים לדבר עם ריפוזיטורי וליצור ולשנות קבצי פרוייקט פיתוח. זו גם המטרה שלהם- להיות עוזר פיתוח. 
-ל- GPT יש עוד יכולות אינטגרצייה (התממשקות) עם כלים כמו Canva, GITT HUB ועוד שיכולות לתת ערך מוסף, אם אתם כבר משלמים לו. אז, לכל אחד יש את ה'קטע' שלו שמייחד אותו.</p>
+ל- GPT יש עוד יכולות אינטגרצייה (התממשקות) עם כלים כמו Canva, GITT HUB ועוד שיכולות לתת ערך מוסף, אם אתם כבר משלמים לו. אז, לכל אחד יש את ה'קטע' שלו שמייחד אותו. </p>
                     </div>
                     <div class="bg-indigo-50 p-6 rounded-xl border border-indigo-100">
                         <div class="text-3xl mb-3">🛠️</div>
@@ -374,3 +1112,4 @@ Codex לדוג', Googl AI Studio - יכולים לדבר עם ריפוזיטור
 </script>
 </body>
 </html>
+*/
