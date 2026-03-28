@@ -3,131 +3,36 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>שיר אורן | AI מ-0 ל-1</title>
+    <title>שיר אורן | קישורים ומדריכים</title>
     <link href="https://fonts.googleapis.com/css2?family=Assistant:wght@300;400;600;700;800&display=swap" rel="stylesheet">
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Assistant', sans-serif !important; }
-        :root { --indigo: #4338ca; --slate: #0f172a; --green: #16a34a; --light-gray: #f8fafc; }
-        body, html { height: 100%; background: #fff; overflow-x: hidden; }
-
-        .nav-bar { position: fixed; top: 0; width: 100%; background: #fff; padding: 15px 40px; display: flex; justify-content: space-between; align-items: center; z-index: 100; border-bottom: 1px solid #eee; }
-        .skip-link { color: #64748b; text-decoration: none; font-weight: 700; font-size: 14px; cursor: pointer; }
-
-        .main-wrapper { display: flex; min-height: 100vh; flex-direction: row; padding-top: 60px; }
-
-        .image-side { flex: 1; position: relative; background: url('shir-profile.jpg') no-repeat center center; background-size: cover; min-height: 50vh; }
-        .image-side::after { content: ''; position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: linear-gradient(to right, rgba(0,0,0,0.85) 0%, rgba(0,0,0,0.3) 100%); }
-        .side-text { position: absolute; bottom: 60px; left: 40px; color: white; z-index: 2; max-width: 450px; text-align: left; }
-        .side-text h2 { font-size: 42px; font-weight: 800; margin-bottom: 15px; text-align: right; }
-        .side-text p { font-size: 20px; line-height: 1.4; font-weight: 300; text-align: right; }
-
-        .content-side { flex: 1.2; padding: 40px 60px; display: flex; flex-direction: column; justify-content: center; }
-        .action-card { max-width: 700px; width: 100%; margin: 0 auto; }
-
-        .hidden { display: none; }
-        .main-btn { width: 100%; padding: 18px; border-radius: 16px; font-size: 18px; font-weight: 800; cursor: pointer; transition: 0.2s; border: none; margin-bottom: 12px; text-align: center; text-decoration: none; display: block; }
-        .btn-indigo { background: var(--indigo); color: white; }
-        .btn-black { background: var(--slate); color: white; }
-        .btn-whatsapp { background: var(--green); color: white; }
-
-        .options-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 12px; margin-bottom: 20px; }
-        .option-btn { padding: 16px; border: 1px solid #e2e8f0; border-radius: 14px; background: white; cursor: pointer; text-align: right; font-size: 16px; font-weight: 600; transition: 0.2s; position: relative; }
-        .option-btn.selected { border-color: var(--indigo); background: #f5f3ff; border-width: 2px; }
-        .option-btn.selected::after { content: '✓'; position: absolute; left: 15px; color: var(--indigo); font-weight: 800; }
-
-        .info-box { background: var(--light-gray); border: 1px solid #e2e8f0; padding: 30px; border-radius: 24px; margin-bottom: 30px; }
-        .tip-box { background: #f5f3ff; border: 1px solid #ddd6fe; border-radius: 16px; padding: 20px; margin-top: 10px; margin-bottom: 20px; }
-        .summary-box { background: #f0fdf4; border: 1px solid #bbf7d0; padding: 24px; border-radius: 20px; margin-top: 20px; line-height: 1.6; }
-
-        @media (max-width: 1024px) { .main-wrapper { flex-direction: column-reverse; } .image-side { height: 35vh; } .content-side { padding: 30px 20px; } }
+        body { background: #f8fafc; display: flex; justify-content: center; align-items: center; min-height: 100vh; padding: 20px; }
+        .container { max-width: 600px; width: 100%; text-align: center; }
+        h1 { font-weight: 800; margin-bottom: 10px; font-size: 32px; color: #0f172a; }
+        .card { background: white; border: 1px solid #e2e8f0; border-radius: 20px; padding: 25px; margin-bottom: 15px; text-decoration: none; display: block; transition: 0.2s; text-align: right; }
+        .card:hover { transform: translateY(-3px); border-color: #4338ca; box-shadow: 0 10px 15px -3px rgba(0,0,0,0.1); }
+        .card-title { font-weight: 800; font-size: 20px; color: #1e293b; margin-bottom: 5px; }
+        .card-desc { font-size: 15px; color: #64748b; line-height: 1.4; }
+        .back-link { display: inline-block; margin-top: 20px; color: #64748b; text-decoration: none; font-weight: 600; font-size: 14px; }
     </style>
 </head>
 <body>
+    <div class="container">
+        <h1>שיר אורן</h1>
+        <p style="margin-bottom: 30px; color: #64748b;">מרכז המדריכים והקורסים הדיגיטליים</p>
+        
+        <a href="/app-link1/index.html" class="card">
+            <div class="card-title">🚀 קורס: AI From 0 to 1</div>
+            <div class="card-desc">המדריך המלא לבניית מוצרים וכלים בעולם ה-AI, צעד אחר צעד.</div>
+        </a>
 
-<nav class="nav-bar">
-    <div style="font-weight: 800;">Shir Oren AI</div>
-    <a href="/links.html" class="skip-link">דלג</a>
-</nav>
+        <a href="/guides/ai-agentic.html" class="card">
+            <div class="card-title">🤖 מדריך: AI Agentic</div>
+            <div class="card-desc">איך לבנות ולנהל סוכני AI חכמים לעבודה עצמאית ויעילה.</div>
+        </a>
 
-<div class="main-wrapper">
-    <div class="content-side">
-        <div class="action-card">
-            
-            <div id="home-view">
-                <div class="info-box">
-                    <h2 style="margin-bottom: 15px; font-weight: 800;">בואו נדבר תכלס.</h2>
-                    <p style="font-size: 18px; line-height: 1.6; color: #334155; margin-bottom: 25px;">
-                        אני אוהבת לעזור לאנשים לחשוב נכון ולבנות מסוגלות להתמודד עם כל הר שיבוא. 
-                        <strong>אני מציעה שיחת תיאום ציפיות קצרה (15 דק'), ללא התחייבות.</strong>
-                        נראה אם ואיך נכון להתקדם יחד.
-                    </p>
-                    <a href="https://wa.me/972547962965" class="main-btn btn-whatsapp">שיחה איתי בוואטסאפ</a>
-                </div>
-                <button onclick="startQuiz()" class="main-btn btn-indigo">התחלת אבחון AI למיקוד צרכים</button>
-            </div>
-
-            <div id="quiz-view" class="hidden">
-                <div id="step-label" style="font-size: 14px; color: #64748b; margin-bottom: 8px;"></div>
-                <h3 id="question-text" style="font-size: 26px; font-weight: 800; margin-bottom: 20px;"></h3>
-                <div id="options-container" class="options-grid"></div>
-                <div id="tip-box" class="hidden tip-box">
-                    <div style="font-weight: 800; color: var(--indigo); font-size: 14px;">טיפ קטן</div>
-                    <p id="tip-text" style="font-size: 15px; margin-top: 5px; line-height: 1.5;"></p>
-                </div>
-                <button id="next-btn" class="hidden main-btn btn-black" onclick="nextStep()">להמשיך</button>
-            </div>
-
-            <div id="result-view" class="hidden">
-                <h3 style="font-size: 26px; font-weight: 800; color: #065f46;">המיקוד המסתמן:</h3>
-                <div id="summary-content" class="summary-box"></div>
-                <a id="wa-final-link" href="#" target="_blank" class="main-btn btn-whatsapp" style="margin-top: 20px;">שליחת וואטסאפ ממוקד</a>
-                <button onclick="window.location.href='/links.html'" style="background:none; border:none; color:#64748b; width:100%; margin-top:10px; cursor:pointer; font-weight: 700;">מעבר לקורס ולמדריכים המלאים</button>             
-            </div>
-        </div>
+        <a href="/" class="back-link">→ חזרה לאבחון ה-AI</a>
     </div>
-
-    <div class="image-side">
-        <div class="side-text">
-            <h2>שיר אורן</h2>
-            <p>אחרי 15 שנים כ-Product Manager, גיליתי שגם עם ניסיון קוד – ללמוד AI זה מסע. כפי שלמדתם להשתמש באינסטגרם – תוכלו ללמוד גם את זה ;) </p>
-        </div>
-    </div>
-</div>
-
-<script>
-    const MY_PHONE = "972547962965"; 
-    const quizSteps = [
-        {
-            key: 'barrier',
-            question: 'מה הכי מעכב אותך היום בעבודה עם AI?',
-            multi: true,
-            options: [
-                { val: 'הצפה ובלבול בין כלים', tip: 'הסוד הוא לא להכיר את כל הכלים, אלא לזהות אילו כלים באמת מועילים לך, על מה מוכנ.ה לשלם ולשלוט באלה בלבד עם אקו-סיסטם פשוט, מהיר ויעיל. כל השאר - זה פשוט Fomo ולא מעניין.' },
-                { val: 'זה לוקח לי יותר זמן מאשר לעשות לבד', tip: 'אם זה לוקח זמן, ה-Workflow פשוט לא מותאם. AI אמור להיות מנוע. זה אומר שצריך לזהות אילו כלים באמת יועילו לך ותפיק.י מהם את המירב וכמובן, איך לעבוד איתם- נכון.' },
-                { val: 'תשובות שטחיות ולא מדויקות', tip: 'כמעט תמיד צריך לעבוד בסבבים: בעיה, דיוק, מבנה, ורק אז ביצוע. כשניגשים לבעיה קודם דרך תכנון יעיל ומדויק, אפשר להבין בדיוק מה עושים.' },
-                { val: 'רעיון שתקוע באמצע', tip: 'כאן צריך לעבור מרעיון למסלול ברור: מה הערך ומה הגרסה הכי קטנה ששווה לבנות, לחילופין- להתחיל ללמוד להשתמש בתותחים הגדולים בלי לפחד. אל דאגה - הרבה מגיעים לשלב הזה. גם אני בהתחלה הייתי שם. ללמוד, להתמיד...' }
-            ]
-        },
-        {
-            key: 'goals',
-            question: 'מה המטרה או המטרות בתקופה הקרובה?',
-            multi: true,
-            options: [
-                { val: 'בניית אתר או דף נחיתה', tip: 'קודם כל כדאי להבחין ביניהם. אבל זה יכול להיות ממש פשוט - פחות מחצי יום, ואם הדף מאוד פשוט, אז... לא רוצה להגיד אפילו שעתיים כולל קונפיגורציות ויכול להגיע גם ליומיים וגם לפרויקט. חשוב להבין ולזהות מה מורכבות והיקף הפרויקט, מה צרכים, דרישות, MVP, אפיון כללי ולזהות את ה-STACK המתאימים. אל דאגה! אני מעלה תוכן רלוונטי על הדברים האלה בדיוק.' },
-                { val: 'פרויקט ראשון עם Cursor או Anti-gravity', tip: 'כלים חזקים מאוד כשיש כבר חשיבה, scope ותכנון מקדים. כשמתכננים נכון, הביצוע מהיר פי 10.' },
-                { val: 'פיתוח HTML בצ\'אטים קיימים', tip: 'כן, זה אפשרי (בלי לשלם על עוד). אבל רק אם עובדים נכון, בודקים, ומבינים מה בונים.' },
-                { val: 'הכשרת Agents ו-SKILLS', tip: 'חלוקה נכונה של עבודה בין מומחים ל-AI היא המפתח ליעילות בארגון. נלמד לבנות רשת סוכנים שעובדים מתוזמר.' },
-                { val: 'לא יודע.ת מאיפה להתחיל. יש לי רעיון וזהו...', tip: 'יש לך רעיון וזהו? אל דאגה. לא רוצים לבזבז זמן על עבודה לא נכונה. תכנון מוקדם יחסוך לך שבועות של בלבול.' }
-            ]
-        },
-        {
-            key: 'tools',
-            question: 'עם איזה צ\'אט אתם בעיקר עובדים היום?',
-            multi: true,
-            options: [{ val: 'ChatGPT' }, { val: 'Claude' }, { val: 'Gemini' }, { val: 'אחר / כלום' }]
-        },
-        {
-            key: 'experience',
-            question: 'מה מצב המיומנות ב-AI כרגע?',
-            multi: false,
-            options: [{ val: 'רק
+</body>
+</html>
