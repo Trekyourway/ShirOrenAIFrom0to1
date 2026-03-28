@@ -3,39 +3,122 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Shir Oren | Digital Hub</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Assistant:wght@300;400;700&display=swap" rel="stylesheet">
+    <title>שיר אורן | AI מ-0 ל-1</title>
+    <link href="https://fonts.googleapis.com/css2?family=Assistant:wght@300;400;600;800&display=swap" rel="stylesheet">
+    <style>
+        :root { --black: #000; --white: #fff; --gray: #f8f8f8; }
+        body, html { margin: 0; padding: 0; font-family: 'Assistant', sans-serif; height: 100%; background: var(--white); overflow-x: hidden; }
+        .main-wrapper { display: flex; min-height: 100vh; flex-direction: row-reverse; }
+
+        /* פאנל ימני - המסתורין */
+        .image-side { flex: 1; position: relative; background: url('shir-profile.jpg') no-repeat center center; background-size: cover; min-height: 50vh; }
+        .image-side::after { content: ''; position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: linear-gradient(to left, rgba(0,0,0,0.85) 0%, rgba(0,0,0,0.3) 100%); }
+        .side-text { position: absolute; bottom: 60px; right: 40px; color: white; z-index: 2; max-width: 450px; }
+        .side-text h2 { font-size: 42px; font-weight: 800; margin-bottom: 15px; }
+        .side-text p { font-size: 20px; line-height: 1.6; font-weight: 300; }
+
+        /* פאנל שמאלי - הפעולה */
+        .content-side { flex: 1.2; padding: 60px; display: flex; flex-direction: column; justify-content: center; background: #fff; }
+        .funnel-box { max-width: 600px; width: 100%; margin: 0 auto; }
+        .step { display: none; }
+        .step.active { display: block; animation: slideIn 0.5s ease; }
+        @keyframes slideIn { from { opacity: 0; transform: translateX(20px); } to { opacity: 1; transform: translateX(0); } }
+
+        h1 { font-size: 32px; font-weight: 800; margin-bottom: 25px; }
+        .option-card { width: 100%; padding: 20px; margin-bottom: 12px; border: 1px solid #eee; border-radius: 16px; background: white; cursor: pointer; text-align: right; font-size: 18px; font-weight: 600; transition: 0.2s; }
+        .option-card:hover { border-color: black; background: #fafafa; }
+        
+        input { width: 100%; padding: 18px; margin-bottom: 15px; border: 2px solid #eee; border-radius: 12px; font-family: 'Assistant'; font-size: 18px; box-sizing: border-box; }
+
+        .tip-container { background: var(--gray); border-right: 5px solid black; padding: 25px; margin: 25px 0; border-radius: 12px; }
+        .main-btn { background: black; color: white; border: none; padding: 22px; border-radius: 50px; width: 100%; font-size: 20px; font-weight: 800; cursor: pointer; margin-top: 15px; text-decoration: none; display: block; text-align: center; }
+        .wa-btn { background: #25D366; }
+
+        @media (max-width: 1024px) { .main-wrapper { flex-direction: column; } .image-side { height: 40vh; } .content-side { padding: 30px 20px; } }
+    </style>
 </head>
-<body class="bg-slate-50 text-slate-900 font-['Assistant']">
+<body>
 
-    <main class="max-w-4xl mx-auto px-6 py-20">
-        <header class="text-center mb-16">
-            <h1 class="text-5xl font-black mb-4 text-indigo-900">Shir Oren</h1>
-            <p class="text-xl text-slate-600">מרכז המדריכים והקורסים הדיגיטליים</p>
-        </header>
-        <div class="space-y-6">
-          <a href="/app-link1/index.html" class="block bg-white p-8 rounded-3xl shadow-sm border border-slate-200 hover:border-indigo-500 hover:shadow-md transition-all group">
-                <div class="flex justify-between items-center">
-                    <div>
-                        <h2 class="text-2xl font-bold group-hover:text-indigo-600">🚀 קורס: AI From 0 to 1</h2>
-                        <p class="text-slate-500 mt-1">המדריך המלא לבניית מוצרים (הקוד הקיים בתיקיית ה-SRC).</p>
-                    </div>
-                    <span class="text-2xl">←</span>
-                </div>
-            </a>
-
-            <a href="/guides/ai-agentic.html" class="block bg-white p-8 rounded-3xl shadow-sm border border-slate-200 hover:border-blue-500 hover:shadow-md transition-all group">
-                <div class="flex justify-between items-center">
-                    <div>
-                        <h2 class="text-2xl font-bold group-hover:text-blue-600">🤖 מדריך כלי ה-AI Agentic</h2>
-                        <p class="text-slate-500 mt-1">איך לבנות פרויקטים בעזרת סוכני בינה מלאכותית.</p>
-                    </div>
-                    <span class="text-2xl">←</span>
-                </div>
-            </a>
+<div class="main-wrapper">
+    <div class="image-side">
+        <div class="side-text">
+            <h2>נעים להכיר, שיר אורן</h2>
+            <p>אחרי 15 שנים כ-Product Manager, הבנתי שגם המקצוענים ביותר צריכים ללמוד. AI הוא שינוי תפיסה. כפי שלמדתם להשתמש באינסטגרם – תוכלו ללמוד גם את זה ;) </p>
         </div>
-    </main>
+    </div>
 
+    <div class="content-side">
+        <div class="funnel-box">
+            <div class="step active" id="step1">
+                <h1>מה הכי מעכב אותך היום בעבודה עם AI?</h1>
+                <button class="option-card" onclick="next(2, 'הצפה ובלבול')">יותר מדי כלים, לא יודע מאיפה להתחיל</button>
+                <button class="option-card" onclick="next(2, 'חוסר זמן')">זה לוקח לי יותר זמן מאשר לעשות לבד</button>
+                <button class="option-card" onclick="next(2, 'חוסר דיוק')">התוצאות לא מספיק מדויקות לצרכים שלי</button>
+            </div>
+
+            <div class="step" id="step2">
+                <h1>טיפ קטן ממני...</h1>
+                <div class="tip-container">
+                    <p id="tip-content"></p>
+                    <p style="font-weight: 700; margin-top:15px;">"כשניגשים לבעיה קודם דרך תכנון יעיל ומדויק, אפשר להבין בדיוק מה עושים. אני מקפידה על כך וכאשר לא, חווה גם עיכובים."</p>
+                </div>
+                <button class="main-btn" onclick="next(3)">בואו נמשיך</button>
+            </div>
+
+            <div class="step" id="step3">
+                <h1>במה היית רוצה עזרה?</h1>
+                <button class="option-card" onclick="next(4, null, 'אתר/דף נחיתה')">אתר או דף נחיתה</button>
+                <button class="option-card" onclick="next(4, null, 'מתודולוגיה')">ללמוד לעבוד נכון (מתודולוגיה)</button>
+                <button class="option-card" onclick="next(4, null, 'Cursor/AntiGravit')">פרוייקט עם Cursor או Anti-Gravit</button>
+                <button class="option-card" onclick="next(4, null, 'פיתוח HTML')">פיתוח HTML עם צ'אטים קיימים</button>
+            </div>
+
+            <div class="step" id="step4">
+                <h1>רגע לפני שמתאמים...</h1>
+                <p>איך קוראים לך ומה המייל/טלפון שלך?</p>
+                <input type="text" id="userName" placeholder="שם מלא">
+                <input type="text" id="userContact" placeholder="מייל או טלפון">
+                <button class="main-btn" onclick="saveAndFinal()">סיימתי, בואי נדבר</button>
+            </div>
+
+            <div class="step" id="step5">
+                <h1>מעולה שיר, בואי נדבר.</h1>
+                <p>נעשה שיחה של 15 דקות ללא התחייבות לתיאום ציפיות. מחירים ומפרטים יהיו בשיחה.</p>
+                <button class="main-btn wa-btn" onclick="sendWhatsApp()">לתיאום שיחה בוואטסאפ</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    let selections = { barrier: '', goal: '', name: '', contact: '' };
+    const MY_PHONE = "972500000000"; // שיר - עדכני למספר שלך
+
+    const tips = {
+        'הצפה ובלבול': 'הסוד הוא לא להכיר את כל הכלים, אלא לזהות את הכלים שבאמת מועילים לך, שנח לך לעבוד איתם ולהתמיד. בכל השאר - זה פשוט - FOMO.',
+        'חוסר זמן': 'אם זה לוקח זמן, ה-Workflow פשוט לא מותאם. AI אמור להיות מנוע, לא מעצור.',
+        'חוסר דיוק': 'הדיוק מגיע מהקשר (Context). AI טועה כשהוא לא מבין את המשימה.'
+    };
+
+    function next(s, barrier, goal) {
+        if(barrier) { selections.barrier = barrier; document.getElementById('tip-content').innerText = tips[barrier]; }
+        if(goal) selections.goal = goal;
+        document.querySelectorAll('.step').forEach(step => step.classList.remove('active'));
+        document.getElementById('step' + s).classList.add('active');
+    }
+
+    function saveAndFinal() {
+        selections.name = document.getElementById('userName').value;
+        selections.contact = document.getElementById('userContact').value;
+        next(5);
+        // שליחה אוטומטית לגוגל שיטס
+        fetch(GOOGLE_URL, { method: 'POST', mode: 'no-cors', body: JSON.stringify(selections) });
+    }
+
+    function sendWhatsApp() {
+        const text = `היי שיר, אני ${selections.name}. העיכוב שלי: ${selections.barrier}. אשמח לעזרה ב: ${selections.goal}. אפשר לקבוע 15 דק'?`;
+        window.open(`https://wa.me/${MY_PHONE}?text=${encodeURIComponent(text)}`, '_blank');
+    }
+</script>
 </body>
 </html>
