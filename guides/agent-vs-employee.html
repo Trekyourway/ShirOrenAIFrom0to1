@@ -1,0 +1,684 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>סוכן לעומת עובד — המדריך המלא | שיר אורן</title>
+<link href="https://fonts.googleapis.com/css2?family=Assistant:wght@300;400;600;700;800&family=Heebo:wght@400;700;900&display=swap" rel="stylesheet">
+<style>
+:root{--teal:#0d9488;--tl:#ccfbf1;--td:#134e4a;--orange:#ea580c;--ol:#ffedd5;--od:#7c2d12;--navy:#0f172a;--slate:#475569;--border:#e2e8f0;--bg:#f8fafc;--sw:270px;--hh:58px}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'Assistant',sans-serif;background:var(--bg);color:#1e293b;overflow-x:hidden}
+h1,h2,h3{font-family:'Heebo',sans-serif}
+#pb{position:fixed;top:0;right:0;height:3px;background:var(--teal);width:0%;z-index:1000;transition:width .1s}
+.mb{display:none;position:fixed;top:3px;right:0;left:0;height:var(--hh);background:rgba(255,255,255,.97);border-bottom:1px solid var(--border);align-items:center;justify-content:space-between;padding:0 1.25rem;z-index:900;backdrop-filter:blur(8px)}
+.mb .br{font-weight:800;font-size:.9rem;color:var(--navy)}
+.mb .wh{font-size:.72rem;color:var(--teal);font-weight:600;max-width:200px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+#hb{background:none;border:none;cursor:pointer;display:flex;flex-direction:column;gap:5px;padding:4px}
+#hb span{display:block;width:22px;height:2px;background:var(--navy);border-radius:2px}
+.sb{position:fixed;top:0;right:0;width:var(--sw);height:100vh;background:#fff;border-left:1px solid var(--border);overflow-y:auto;z-index:800;padding:1.25rem 0 3rem;transition:transform .3s ease}
+.sbl{padding:0 1.25rem 1rem;border-bottom:1px solid var(--border);margin-bottom:.5rem}
+.sbl .nm{font-weight:800;font-size:.95rem;color:var(--navy)}
+.sbl .sb2{font-size:.7rem;color:var(--slate);margin-top:2px}
+.sl{font-size:.63rem;font-weight:700;color:var(--slate);letter-spacing:.08em;text-transform:uppercase;padding:.65rem 1.25rem .2rem}
+.ni{display:block;padding:.4rem 1.25rem;font-size:.8rem;color:var(--slate);text-decoration:none;border-right:3px solid transparent;transition:.15s;line-height:1.4}
+.ni:hover{color:var(--teal);background:var(--tl)}
+.ni.active{color:var(--teal);font-weight:700;border-right-color:var(--teal);background:#f0fdfa}
+.ni.b{font-weight:700;color:var(--navy);font-size:.82rem}
+.ov{display:none;position:fixed;inset:0;background:rgba(0,0,0,.45);z-index:799}
+.ov.show{display:block}
+.mn{margin-right:var(--sw);min-height:100vh}
+.hero{background:linear-gradient(135deg,#0f172a 0%,#134e4a 50%,#1e3a5f 100%);color:#fff;padding:5rem 2.5rem 4rem;position:relative;overflow:hidden}
+.hero::before{content:'';position:absolute;inset:0;background:radial-gradient(circle at 20% 50%,rgba(13,148,136,.2) 0%,transparent 55%),radial-gradient(circle at 80% 20%,rgba(234,88,12,.1) 0%,transparent 40%)}
+.hi{max-width:740px;position:relative;z-index:1}
+.hbg{display:inline-flex;align-items:center;gap:6px;background:rgba(13,148,136,.25);border:1px solid rgba(94,234,212,.4);color:#99f6e4;font-size:.72rem;font-weight:700;padding:5px 14px;border-radius:999px;letter-spacing:.06em;text-transform:uppercase;margin-bottom:1.25rem}
+.hero h1{font-size:clamp(1.8rem,4.5vw,2.8rem);font-weight:900;line-height:1.15;margin-bottom:.75rem}
+.hero .sub{font-size:1.05rem;color:#99f6e4;font-weight:300;margin-bottom:1.5rem}
+.pb2{background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.15);border-radius:12px;padding:1.1rem 1.4rem;font-size:.95rem;line-height:1.75;color:#e2e8f0}
+.pb2 strong{color:#fff}
+.ht{display:flex;flex-wrap:wrap;gap:8px;margin-top:1.5rem}
+.ht span{background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.2);color:#cbd5e1;font-size:.72rem;font-weight:600;padding:4px 12px;border-radius:999px}
+.ct{max-width:760px;padding:0 2rem 6rem;margin:0 auto}
+.fs{opacity:0;transform:translateY(26px);transition:opacity .5s ease,transform .5s ease}
+.fs.visible{opacity:1;transform:translateY(0)}
+.ch{display:flex;align-items:center;gap:12px;padding:2.5rem 0 .5rem;border-top:2px solid var(--teal);margin-top:3rem}
+.ch:first-of-type{border-top:none;padding-top:2rem;margin-top:1.5rem}
+.cn{background:var(--teal);color:#fff;font-weight:900;font-size:.78rem;width:28px;height:28px;border-radius:50%;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.ch h2{font-size:1.4rem;font-weight:900;color:var(--navy)}
+.st{font-size:1.05rem;font-weight:700;color:var(--navy);margin:1.75rem 0 .6rem;padding-right:.75rem;border-right:3px solid var(--teal)}
+p{font-size:.97rem;line-height:1.8;color:#334155;margin:.6rem 0}
+ul,ol{padding-right:1.5rem;margin:.5rem 0}
+li{font-size:.94rem;line-height:1.75;color:#334155;margin-bottom:.35rem}
+li strong{color:var(--navy)}
+.card{background:#fff;border:1px solid var(--border);border-radius:14px;padding:1.25rem 1.4rem;margin:.85rem 0}
+.co{border-radius:10px;padding:.9rem 1.2rem;margin:.85rem 0;font-size:.91rem;line-height:1.7}
+.co strong{display:block;margin-bottom:4px;font-size:.88rem}
+.cot{background:#f0fdfa;border-right:4px solid var(--teal);color:var(--td)}
+.coo{background:#fff7ed;border-right:4px solid var(--orange);color:var(--od)}
+.cob{background:#eff6ff;border-right:4px solid #2563eb;color:#1e3a5f}
+.coa{background:#fffbeb;border-right:4px solid #f59e0b;color:#78350f}
+.cor{background:#fef2f2;border-right:4px solid #ef4444;color:#7f1d1d}
+.cb{background:#0f172a;border-radius:10px;padding:1.1rem 1.4rem;margin:.75rem 0;overflow-x:auto}
+.cb pre{margin:0}
+.cb code{font-family:'Courier New',monospace;font-size:.78rem;line-height:1.65;color:#e2e8f0;white-space:pre-wrap}
+code:not(.cb code){background:#e2e8f0;padding:1px 5px;border-radius:4px;font-family:'Courier New',monospace;font-size:.82em;color:#1e293b}
+.tw{overflow-x:auto;margin:.85rem 0;border-radius:10px;border:1px solid var(--border)}
+table{width:100%;border-collapse:collapse;background:#fff}
+th{background:#134e4a;color:#fff;padding:10px 14px;text-align:right;font-size:.81rem;font-weight:700}
+td{padding:9px 14px;border-bottom:1px solid var(--border);font-size:.82rem;line-height:1.55;vertical-align:top}
+tr:last-child td{border-bottom:none}
+tr:nth-child(even) td{background:#fafafa}
+hr{border:none;border-top:1px solid var(--border);margin:1.75rem 0}
+
+/* COMPARISON CARDS */
+.cmp{display:grid;grid-template-columns:1fr 1fr;gap:0;margin:1rem 0;border-radius:14px;overflow:hidden;border:1px solid var(--border)}
+.cmp-h{padding:.75rem 1.1rem;font-weight:800;font-size:.95rem;display:flex;align-items:center;gap:8px}
+.cmp-emp .cmp-h{background:#fef9c3;color:#713f12}
+.cmp-agt .cmp-h{background:#f0fdfa;color:var(--td)}
+.cmp-body{padding:1rem 1.1rem;background:#fff;border-top:1px solid var(--border)}
+.cmp-emp .cmp-body{border-left:1px solid var(--border)}
+.cmp-row{display:flex;gap:8px;margin-bottom:.45rem;font-size:.86rem;line-height:1.55;color:#334155}
+.cmp-row::before{content:'•';flex-shrink:0;color:var(--slate)}
+
+/* MEMORY VISUAL */
+.mem-bar{margin:1rem 0}
+.mem-label{font-size:.8rem;font-weight:700;color:var(--navy);margin-bottom:4px}
+.mem-track{height:10px;border-radius:999px;background:#e2e8f0;overflow:hidden;margin-bottom:2px}
+.mem-fill-full{height:100%;background:linear-gradient(90deg,#f59e0b,#ef4444);width:100%}
+.mem-fill-zero{height:100%;background:#e2e8f0;width:0%}
+.mem-fill-skill{height:100%;background:var(--teal);width:60%}
+.mem-sub{font-size:.73rem;color:var(--slate)}
+
+/* HIERARCHY */
+.hier{background:#1e293b;border-radius:12px;padding:1.25rem 1.5rem;margin:.85rem 0;font-family:'Courier New',monospace;font-size:.78rem;line-height:1.85;color:#94a3b8}
+.hier .d{color:#93c5fd}
+.hier .f{color:#86efac}
+.hier .sk{color:#f9a8d4}
+.hier .cm{color:#64748b}
+.hier .hl{color:#fde68a;font-weight:700}
+
+/* USE CASE CARDS */
+.uc-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin:1rem 0}
+.uc{background:#fff;border:1.5px solid var(--border);border-radius:14px;padding:1.1rem 1.2rem}
+.uc-icon{font-size:1.4rem;margin-bottom:6px}
+.uc-title{font-weight:800;font-size:.9rem;color:var(--navy);margin-bottom:4px}
+.uc-desc{font-size:.8rem;color:var(--slate);line-height:1.5;margin-bottom:8px}
+.uc-agents{display:flex;flex-wrap:wrap;gap:4px}
+.uc-a{font-size:.68rem;padding:2px 7px;border-radius:999px;background:var(--tl);color:var(--td);font-weight:700}
+
+/* TIER */
+.tier{display:flex;flex-direction:column;gap:0;margin:1rem 0;border-radius:14px;overflow:hidden;border:1px solid var(--border)}
+.tier-row{display:grid;grid-template-columns:120px 1fr;align-items:stretch}
+.tier-row:not(:last-child){border-bottom:1px solid var(--border)}
+.tier-label{background:#134e4a;color:#fff;padding:.8rem 1rem;font-size:.78rem;font-weight:700;display:flex;align-items:center}
+.tier-body{background:#fff;padding:.8rem 1.1rem;font-size:.83rem;line-height:1.6;color:#334155}
+
+/* CLOSING */
+.cbox{background:linear-gradient(135deg,#0f172a,#134e4a);color:#fff;border-radius:18px;padding:2.5rem 2rem;margin:3rem 0 2rem;text-align:center}
+.cbox h2{font-size:1.55rem;font-weight:900;margin-bottom:1rem}
+.cbox p{color:#99f6e4;font-size:.97rem;line-height:1.8;max-width:560px;margin:0 auto}
+.cp{display:flex;flex-wrap:wrap;gap:10px;justify-content:center;margin-top:1.5rem}
+.pi{background:rgba(13,148,136,.25);border:1px solid rgba(94,234,212,.4);color:#99f6e4;font-size:.8rem;font-weight:700;padding:6px 16px;border-radius:999px}
+
+@media(max-width:900px){.sb{transform:translateX(100%)}.sb.open{transform:translateX(0)}.mb{display:flex}.mn{margin-right:0;padding-top:var(--hh)}.ct{padding:0 1rem 4rem}.hero{padding:2.5rem 1.25rem 2.5rem}.cmp{grid-template-columns:1fr}.uc-grid{grid-template-columns:1fr}.tier-row{grid-template-columns:90px 1fr}}
+@media(prefers-reduced-motion:reduce){.fs{opacity:1;transform:none}}
+</style>
+</head>
+<body>
+<div id="pb"></div>
+<div class="mb">
+  <div><div class="br">סוכן לעומת עובד</div><div class="wh" id="mw">מבוא</div></div>
+  <button id="hb"><span></span><span></span><span></span></button>
+</div>
+<div class="ov" id="ov"></div>
+<aside class="sb" id="sb">
+  <div class="sbl"><div class="nm">שיר אורן</div><div class="sb2">סוכן לעומת עובד — המדריך המלא</div></div>
+  <div class="sl">הבסיס</div>
+  <a class="ni b" href="#hero" onclick="cn()">מבוא</a>
+  <a class="ni" href="#fundamental" onclick="cn()">ההבדל היסודי</a>
+  <a class="ni b" href="#memory" onclick="cn()">זיכרון — ההבדל הכי קריטי</a>
+  <a class="ni" href="#mem-types" onclick="cn()">סוגי זיכרון של סוכן</a>
+  <a class="ni" href="#initiative" onclick="cn()">יוזמה ותזמון</a>
+  <div class="sl">השוואה מלאה</div>
+  <a class="ni b" href="#comparison" onclick="cn()">טבלת השוואה מלאה</a>
+  <a class="ni" href="#scheduling" onclick="cn()">תזמון — מה אפשרי ומה לא</a>
+  <div class="sl">יוזקייסים</div>
+  <a class="ni b" href="#usecases" onclick="cn()">מתי סוכן ומתי לא</a>
+  <a class="ni" href="#uc-content" onclick="cn()">יוזקייס: צוות תוכן</a>
+  <a class="ni" href="#uc-dev" onclick="cn()">יוזקייס: צוות פיתוח</a>
+  <a class="ni" href="#uc-research" onclick="cn()">יוזקייס: צוות מחקר</a>
+  <a class="ni" href="#uc-solo" onclick="cn()">יוזקייס: סוכן יחיד</a>
+  <div class="sl">מבנה ופקודות</div>
+  <a class="ni b" href="#hierarchy" onclick="cn()">היררכיית תיקיות</a>
+  <a class="ni" href="#commands" onclick="cn()">פקודות — ממציאים או ספרייה?</a>
+  <a class="ni" href="#anti-patterns" onclick="cn()">טעויות נפוצות</a>
+  <div class="sl">סיום</div>
+  <a class="ni" href="#mental-model" onclick="cn()">המודל המנטלי הנכון</a>
+  <a class="ni" href="#closing" onclick="cn()">סיכום</a>
+</aside>
+
+<div class="mn">
+<header class="hero" id="hero">
+  <div class="hi">
+    <div class="hbg">מדריך יסודות — Agents vs Employees</div>
+    <h1>סוכן לעומת עובד<br>המדריך המלא</h1>
+    <p class="sub">הבדלים, יכולות, מגבלות, יוזקייסים, פקודות — הכל במקום אחד</p>
+    <div class="pb2"><strong>למה המדריך הזה חשוב:</strong><br>
+    רוב האנשים מנסים לנהל סוכן כמו שמנהלים עובד — ואז מתאכזבים. כשמבינים את ההבדל היסודי בין השניים, מבינים גם למה סוכן לא "זוכר" מה אמרת אתמול, למה הוא לא "יוזם" בלי שתפעיל אותו, ואיך לבנות מערכות שעובדות עם המגבלות האלה — ולא נלחמות בהן.
+    </div>
+    <div class="ht"><span>זיכרון</span><span>יוזמה</span><span>תזמון</span><span>היררכיה</span><span>פקודות</span><span>יוזקייסים</span></div>
+  </div>
+</header>
+
+<div class="ct">
+
+<!-- ═══ FUNDAMENTAL ═══ -->
+<div class="fs" id="fundamental">
+<div class="ch"><div class="cn">1</div><h2>ההבדל היסודי — שני מודלים שונים לחלוטין</h2></div>
+
+<p>עובד ו-AI agent נראים דומים מבחוץ: שניהם מקבלים משימות, שניהם מוציאים תוצרים. אבל המודל הפנימי שלהם שונה לחלוטין — ואם לא מבינים את זה, מתאכזבים.</p>
+
+<div class="cmp">
+  <div class="cmp-emp">
+    <div class="cmp-h">🧑 עובד אנושי</div>
+    <div class="cmp-body">
+      <div class="cmp-row">קיים ברציפות — גם כשלא עובד</div>
+      <div class="cmp-row">זוכר כל שיחה, כל פרויקט, כל החלטה</div>
+      <div class="cmp-row">יכול ליזום — "שמתי לב שיש בעיה כאן"</div>
+      <div class="cmp-row">לומד מניסיון לאורך זמן</div>
+      <div class="cmp-row">מחליט מה לדווח ומה לסנן</div>
+      <div class="cmp-row">מכיר הקשר ארגוני — מי חשוב, מה מדיניות</div>
+      <div class="cmp-row">מגיב לאווירה, לטון, לעייפות שלך</div>
+      <div class="cmp-row">מגיע לעבודה מחר בבוקר — לבד</div>
+    </div>
+  </div>
+  <div class="cmp-agt">
+    <div class="cmp-h">🤖 סוכן AI</div>
+    <div class="cmp-body">
+      <div class="cmp-row">קיים רק כשמפעילים אותו</div>
+      <div class="cmp-row">בכל שיחה חדשה — מאפס, אלא אם נתת לו context</div>
+      <div class="cmp-row">לא יוזם — מחכה לשיחה חדשה</div>
+      <div class="cmp-row">לא "לומד" — Skills ו-Rules הן הלמידה שלו</div>
+      <div class="cmp-row">מדווח על הכל — אין שיקול דעת ברירת מחדל</div>
+      <div class="cmp-row">לא מכיר פוליטיקה ארגונית אלא אם כתבת לו</div>
+      <div class="cmp-row">לא מגיב לטון — מגיב לטקסט</div>
+      <div class="cmp-row">מחר — לא יפעל עד שתפתח שיחה חדשה</div>
+    </div>
+  </div>
+</div>
+
+<div class="co cot"><strong>המסקנה המעשית:</strong> סוכן הוא לא "עובד זול". הוא כלי שונה לחלוטין. כשמתכננים סוכן, שואלים "איזה כלי חסר לי?" — לא "איזה עובד אני יכול להחליף?"</div>
+</div>
+
+<!-- ═══ MEMORY ═══ -->
+<div class="fs" id="memory">
+<div class="ch"><div class="cn">2</div><h2>זיכרון — ההבדל הכי קריטי שיש</h2></div>
+
+<p>אם תבינו רק דבר אחד מהמדריך הזה — שיהיה זה: <strong>לסוכן אין זיכרון בין שיחות. בכלל. אפס.</strong></p>
+
+<p>כשאתה פותח שיחה חדשה עם סוכן Antigravity, הוא לא זוכר:</p>
+<ul>
+  <li>מי אתה</li>
+  <li>מה הפרויקט שלך</li>
+  <li>מה הסגנון שביקשת</li>
+  <li>מה עבד ומה לא עבד אתמול</li>
+  <li>כל ההחלטות שקיבלתם ביחד</li>
+  <li>שיצרתם 47 פוסטים ביחד עד עכשיו</li>
+</ul>
+
+<div class="st">ויזואליזציה: כמה זיכרון יש לכל אחד?</div>
+<div class="card">
+  <div class="mem-bar">
+    <div class="mem-label">עובד אנושי — זיכרון בין ימי עבודה</div>
+    <div class="mem-track"><div class="mem-fill-full"></div></div>
+    <div class="mem-sub">זוכר הכל — הקשר, היסטוריה, פוליטיקה, סגנון, העדפות אישיות</div>
+  </div>
+  <hr style="margin:1rem 0">
+  <div class="mem-bar">
+    <div class="mem-label">סוכן AI — זיכרון בין שיחות (ללא הגדרה)</div>
+    <div class="mem-track"><div class="mem-fill-zero"></div></div>
+    <div class="mem-sub">אפס. כל שיחה מתחילה מאפס לחלוטין.</div>
+  </div>
+  <hr style="margin:1rem 0">
+  <div class="mem-bar">
+    <div class="mem-label">סוכן AI — עם Skills + Rules + context.md</div>
+    <div class="mem-track"><div class="mem-fill-skill"></div></div>
+    <div class="mem-sub">~60% — זוכר מה שכתבת לו. לא זוכר מה שלא כתבת.</div>
+  </div>
+</div>
+
+<div class="co coo"><strong>מה זה אומר בפועל:</strong> כשעובד חוזר ממחלה שבוע, הוא יודע איפה עצר. כשסוכן מתחיל שיחה חדשה — הוא לא יודע שהיה שם בכלל. לכן context.md הוא לא "נוחות" — הוא תנאי קיום.</div>
+</div>
+
+<!-- ═══ MEMORY TYPES ═══ -->
+<div class="fs" id="mem-types">
+<div class="st">ארבעה סוגי זיכרון שיש לסוכן — ואיך בונים אותם</div>
+
+<div class="tier">
+  <div class="tier-row">
+    <div class="tier-label" style="background:#134e4a">Rules<br><small style="font-weight:400;font-size:.68rem">תמיד פעיל</small></div>
+    <div class="tier-body"><strong>מה זה:</strong> חוקים שתמיד קיימים בכל שיחה — לא ניתן "לשכוח" אותם.<br><strong>מה שמים:</strong> שפה, בטיחות, סגנון, כללי ברזל.<br><strong>דוגמה:</strong> "אל תמחק קבצים בלי אישור. כתוב תמיד בעברית."<br><strong>קובץ:</strong> <code>.agent/rules.md</code></div>
+  </div>
+  <div class="tier-row">
+    <div class="tier-label" style="background:#0d9488">Skills<br><small style="font-weight:400;font-size:.68rem">on demand</small></div>
+    <div class="tier-body"><strong>מה זה:</strong> ידע מקצועי שהסוכן טוען רק כשרלוונטי למשימה.<br><strong>מה שמים:</strong> סגנון מותג, עיצוב, SEO, פרודקשן, API ספציפי.<br><strong>דוגמה:</strong> "brand-voice" נטענת כשכותבים תוכן. "deploy-to-vercel" נטענת כשמפרסים.<br><strong>מיקום:</strong> <code>.agent/skills/[שם-skill]/SKILL.md</code></div>
+  </div>
+  <div class="tier-row">
+    <div class="tier-label" style="background:#0f766e">Context<br><small style="font-weight:400;font-size:.68rem">סטטוס שוטף</small></div>
+    <div class="tier-body"><strong>מה זה:</strong> "מה קורה עכשיו" — מצב הפרויקט, מה הושלם, מה הבא.<br><strong>מה שמים:</strong> סטטוס עבודה, החלטות שהתקבלו, TODO, היסטוריה קצרה.<br><strong>חשוב:</strong> מתעדכן בסוף כל שיחה. זה ה"דף הסיכום" שהסוכן קורא בפתיחה.<br><strong>קובץ:</strong> <code>.agent/context.md</code></div>
+  </div>
+  <div class="tier-row">
+    <div class="tier-label" style="background:#155e75">Notes<br><small style="font-weight:400;font-size:.68rem">ידע ספציפי</small></div>
+    <div class="tier-body"><strong>מה זה:</strong> מידע שלא מתאים ל-Skill ולא ל-Rules — לקוחות, פרטי אינטגרציה, החלטות עבר.<br><strong>מה שמים:</strong> "לקוח X לא אוהב שמשתמשים ב-Y". "ה-API של Z מחזיר שגיאה כשמעבירים מערך ריק".<br><strong>מיקום:</strong> <code>.agent/notes/[נושא].md</code></div>
+  </div>
+</div>
+
+<div class="co cot"><strong>הכלל שמסכם הכל:</strong> כל מה שסוכן "צריך לזכור" — עליך לכתוב בקובץ. מה שלא כתוב — לא קיים בשיחה הבאה.</div>
+</div>
+
+<!-- ═══ INITIATIVE ═══ -->
+<div class="fs" id="initiative">
+<div class="ch"><div class="cn">3</div><h2>יוזמה — מי מתחיל את העבודה?</h2></div>
+
+<p>עובד אנושי רואה שהאסל מלא ורוקן אותו בלי שביקשו. סוכן AI ישב ויחכה עד שתפתח שיחה ותגיד לו "ריק את האסל".</p>
+
+<p>זה לא חיסרון — זו תכונה. <strong>הסוכן עושה בדיוק מה שאמרת לו, לא יותר.</strong> אין פרשנויות, אין "נראה לי שהתכוונת ל...", אין יוזמה שיכולה לשבש תוכניות.</p>
+
+<div class="st">אז מי מפעיל את הסוכן?</div>
+<div class="tw"><table>
+<tr><th>מי מפעיל</th><th>איך</th><th>מתי זה עובד</th></tr>
+<tr><td><strong>את</strong></td><td>פתיחת שיחה ידנית + בקשה</td><td>תמיד. זו הדרך הבסיסית.</td></tr>
+<tr><td><strong>Workflow</strong></td><td><code>/create-post נושא</code></td><td>כשיש רצף פעולות מוגדר מראש.</td></tr>
+<tr><td><strong>Scheduler חיצוני</strong></td><td>Make / Zapier / Cron שמפעיל Workflow</td><td>לתהליכים שחוזרים בזמן קבוע. ראי פרק תזמון.</td></tr>
+<tr><td><strong>Webhook</strong></td><td>אירוע חיצוני שמפעיל סוכן</td><td>כשמשהו קורה (לקוח נרשם, פוסט פורסם) והסוכן צריך להגיב.</td></tr>
+<tr><td><strong>Lead Agent</strong></td><td>סוכן אחד שמפעיל סוכנים אחרים</td><td>בצוותים — Lead מחלק עבודה לSpecialists.</td></tr>
+</table></div>
+</div>
+
+<!-- ═══ COMPARISON TABLE ═══ -->
+<div class="fs" id="comparison">
+<div class="ch"><div class="cn">4</div><h2>טבלת השוואה מלאה</h2></div>
+
+<div class="tw"><table>
+<tr><th>מאפיין</th><th>עובד אנושי</th><th>סוכן AI (ללא הגדרה)</th><th>סוכן AI (עם הגדרה טובה)</th></tr>
+<tr><td><strong>זיכרון בין שיחות</strong></td><td>מלא ואוטומטי</td><td>אפס</td><td>מה שכתבת ב-context.md</td></tr>
+<tr><td><strong>זמינות</strong></td><td>שעות עבודה בלבד</td><td>24/7 כשמפעילים</td><td>24/7 כשמפעילים</td></tr>
+<tr><td><strong>יוזמה</strong></td><td>כן — רואה בעיה ומדווח</td><td>אפס — מחכה לשיחה</td><td>אפס — אלא אם Scheduler מפעיל</td></tr>
+<tr><td><strong>תזמון</strong></td><td>יש לו לו"ז משלו</td><td>אין — פועל רק כשמפעילים</td><td>אפשרי דרך כלים חיצוניים</td></tr>
+<tr><td><strong>מקביליות</strong></td><td>עושה דבר אחד בכל פעם</td><td>עושה דבר אחד בכל שיחה</td><td>כמה שיחות מקביל = כמה סוכנים</td></tr>
+<tr><td><strong>עייפות</strong></td><td>מתעייף, מבצע גרוע לאחר 8 שעות</td><td>לא מתעייף</td><td>לא מתעייף, אבל context window מוגבל</td></tr>
+<tr><td><strong>שגיאות</strong></td><td>אנושיות, ספוראדיות</td><td>הזיות — ממציא מידע</td><td>מופחת עם Skills ו-Rules טובות</td></tr>
+<tr><td><strong>עלות</strong></td><td>גבוהה, חודשית</td><td>לפי שימוש / כלול בתוכנית</td><td>כנ"ל</td></tr>
+<tr><td><strong>הכשרה חדשה</strong></td><td>שבועות עד חודשים</td><td>שינוי SKILL.md — מיידי</td><td>שינוי SKILL.md — מיידי</td></tr>
+<tr><td><strong>שכפול</strong></td><td>בלתי אפשרי</td><td>אפשרי — אותה Skill על כמה סוכנים</td><td>כנ"ל</td></tr>
+<tr><td><strong>פוליטיקה ארגונית</strong></td><td>מבין ומנווט</td><td>לא קיים</td><td>רק אם כתבת context.md מפורט</td></tr>
+<tr><td><strong>שיקול דעת</strong></td><td>גבוה — יודע מה לסנן</td><td>נמוך — מדווח על הכל</td><td>בינוני — לפי Rules שהגדרת</td></tr>
+<tr><td><strong>יכולת "לקרוא חדר"</strong></td><td>כן</td><td>לא</td><td>לא</td></tr>
+</table></div>
+</div>
+
+<!-- ═══ SCHEDULING ═══ -->
+<div class="fs" id="scheduling">
+<div class="ch"><div class="cn">5</div><h2>תזמון — מה אפשרי ומה לא</h2></div>
+
+<p>זו אחת השאלות הכי נפוצות: "אפשר לגרום לסוכן לפעול לבד כל שני בבוקר?" התשובה: <strong>כן — אבל לא מתוך Antigravity עצמו.</strong></p>
+
+<div class="st">מה Antigravity לא יכול לעשות</div>
+<ul>
+  <li>אין שעון מובנה — Antigravity לא יכול לפתוח שיחה לבד בשעה X</li>
+  <li>אין "עורב מתזמן" — הסוכן לא יתחיל לעבוד בלי שמישהו יפתח שיחה</li>
+  <li>אין התראות דחיפה — הוא לא יתריע על כלום אם לא רצה</li>
+</ul>
+
+<div class="st">מה אפשרי — 4 שיטות לתזמון</div>
+
+<div class="card">
+  <strong style="display:block;margin-bottom:10px;color:var(--navy)">שיטה 1 — Make / Zapier (הכי פשוט)</strong>
+  <p style="font-size:.85rem">יוצרים Automation שרץ בשעה קבועה. ה-Automation שולח בקשה ל-Antigravity דרך API (אם חשוף) או פותח שיחה בדפדפן דרך כלי automation.<br><strong>מתאים ל:</strong> תהליכים שחוזרים על עצמם — "כל ראשון ב-7:00 בבוקר הפעל /weekly-content".</p>
+</div>
+
+<div class="card">
+  <strong style="display:block;margin-bottom:10px;color:var(--navy)">שיטה 2 — Claude Code עם Cron</strong>
+  <p style="font-size:.85rem">Claude Code יכול לרוץ על שרת עם cron job. הסקריפט פותח שיחה עם Antigravity ומריץ workflow בשעה קבועה.<br><strong>מתאים ל:</strong> מי שנוח עם CLI ורוצה שליטה מלאה.</p>
+  <div class="cb"><pre><code># crontab - כל יום ראשון בשעה 8:00
+0 8 * * 1 /usr/local/bin/run-agent-workflow.sh weekly-content</code></pre></div>
+</div>
+
+<div class="card">
+  <strong style="display:block;margin-bottom:10px;color:var(--navy)">שיטה 3 — Webhook + Trigger</strong>
+  <p style="font-size:.85rem">אירוע חיצוני מפעיל סוכן. לקוח מילא טופס → Webhook → סוכן מעבד ושולח מייל.<br><strong>מתאים ל:</strong> תגובה לאירועים, לא לזמן קבוע.</p>
+</div>
+
+<div class="card">
+  <strong style="display:block;margin-bottom:10px;color:var(--navy)">שיטה 4 — ידנית מתוזמנת (הכי פשוט לבינתיים)</strong>
+  <p style="font-size:.85rem">את פותחת שיחה פעם בשבוע ומריצה <code>/weekly-content</code>. הסוכן עושה את כל השאר לבד. <strong>לא אוטומטי לחלוטין</strong> — אבל הרבה יותר מהיר מלעשות את הכל ידנית.</p>
+</div>
+
+<div class="co coa"><strong>ההמלצה לתחילת הדרך:</strong> אל תשקיעי בתזמון אוטומטי עד שה-Workflow עצמו עובד טוב ידנית. תזמון של workflow שבור = כאב ראש אוטומטי.</div>
+</div>
+
+<!-- ═══ USE CASES ═══ -->
+<div class="fs" id="usecases">
+<div class="ch"><div class="cn">6</div><h2>מתי סוכן מתאים ומתי לא</h2></div>
+
+<div class="tw"><table>
+<tr><th>משימה</th><th>סוכן מתאים?</th><th>למה</th></tr>
+<tr><td>כתיבת תוכן לפי בריף קבוע</td><td>✅ מאוד</td><td>תהליך חוזר, Skills ברורות, פלט מוגדר</td></tr>
+<tr><td>פיתוח קוד לפי spec</td><td>✅ מאוד</td><td>כנ"ל — Antigravity בנוי לזה</td></tr>
+<tr><td>ניהול קשרי לקוחות</td><td>⚠️ חלקית</td><td>כן לתגובות תבניתיות, לא לשיחות רגשיות מורכבות</td></tr>
+<tr><td>החלטות אסטרטגיות</td><td>❌ לא</td><td>דורש שיקול דעת, הקשר ארגוני, מידע שלא כתוב</td></tr>
+<tr><td>בדיקת QA לפי checklist</td><td>✅ מאוד</td><td>תהליך מוגדר לחלוטין, אין צורך ביוזמה</td></tr>
+<tr><td>יצירת תוכן מקורי ללא בריף</td><td>⚠️ בינוני</td><td>אפשרי עם Strategy Skill טובה, אבל דורש oversight</td></tr>
+<tr><td>ניהול צוות אנושי</td><td>❌ לא</td><td>דורש יוזמה, זיכרון, ויכולת לקרוא "בין השורות"</td></tr>
+<tr><td>עיבוד נתונים חוזר</td><td>✅ מאוד</td><td>מדויק, מהיר, לא מתעייף</td></tr>
+<tr><td>פגישות עם לקוחות</td><td>❌ לא</td><td>דורש אינטליגנציה רגשית ויוזמה</td></tr>
+<tr><td>כתיבת תיעוד מקוד קיים</td><td>✅ מאוד</td><td>קוד קיים + Skill ברורה = תוצאה מצוינת</td></tr>
+</table></div>
+</div>
+
+<!-- ═══ USE CASE: CONTENT ═══ -->
+<div class="fs" id="uc-content">
+<div class="st">יוזקייס 1 — צוות תוכן</div>
+<p><strong>בעיה שפותרת:</strong> ייצור תוכן עקבי בלי לכתוב מאפס כל פעם.</p>
+<p><strong>למה סוכנים מתאימים:</strong> התהליך קבוע. הפלט מוגדר. Brand Voice ניתנת לכימות.</p>
+<div class="uc-grid">
+  <div class="uc">
+    <div class="uc-icon">🎯</div>
+    <div class="uc-title">Strategist</div>
+    <div class="uc-desc">מחקר + הגדרת זווית + בריף</div>
+    <div class="uc-agents"><span class="uc-a">content-strategy</span><span class="uc-a">brand-voice</span></div>
+  </div>
+  <div class="uc">
+    <div class="uc-icon">✍️</div>
+    <div class="uc-title">Writer + Editor</div>
+    <div class="uc-desc">כתיבה ראשונה + עריכה לטון</div>
+    <div class="uc-agents"><span class="uc-a">copywriting-patterns</span><span class="uc-a">brand-voice</span></div>
+  </div>
+  <div class="uc">
+    <div class="uc-icon">🔍</div>
+    <div class="uc-title">SEO + QA</div>
+    <div class="uc-desc">אופטימיזציה + בדיקה לפני פרסום</div>
+    <div class="uc-agents"><span class="uc-a">seo-optimizer</span><span class="uc-a">qa-checklist</span></div>
+  </div>
+  <div class="uc">
+    <div class="uc-icon">📦</div>
+    <div class="uc-title">Publisher</div>
+    <div class="uc-desc">המרה לפורמטים + הגשה לערוצים</div>
+    <div class="uc-agents"><span class="uc-a">content-formats</span><span class="uc-a">platform-rules</span></div>
+  </div>
+</div>
+<div class="co cot"><strong>פקודת הפעלה:</strong> <code>/create-post [נושא]</code> — מריצה את כל ה-pipeline מאפס עד תוצר מוכן.</div>
+</div>
+
+<!-- ═══ USE CASE: DEV ═══ -->
+<div class="fs" id="uc-dev">
+<div class="st">יוזקייס 2 — צוות פיתוח</div>
+<p><strong>בעיה שפותרת:</strong> בניית פיצ'ר שלם — מ-spec לקוד לבדיקות לפריסה — בלי לנהל כל שלב ידנית.</p>
+<p><strong>למה סוכנים מתאימים:</strong> Antigravity בנוי לזה. הסוכן קורא קוד קיים, כותב, בודק, מריץ — כל זה בתוך הכלי עצמו.</p>
+
+<div class="uc-grid">
+  <div class="uc">
+    <div class="uc-icon">📋</div>
+    <div class="uc-title">Architect</div>
+    <div class="uc-desc">קורא PRD, מגדיר מבנה, מחלק לפיצ'רים</div>
+    <div class="uc-agents"><span class="uc-a">api-design-principles</span><span class="uc-a">full-stack-orchestration</span></div>
+  </div>
+  <div class="uc">
+    <div class="uc-icon">💻</div>
+    <div class="uc-title">Developer</div>
+    <div class="uc-desc">כותב קוד לפי ה-spec של Architect</div>
+    <div class="uc-agents"><span class="uc-a">nextjs-app-router-patterns</span><span class="uc-a">react-modernization</span></div>
+  </div>
+  <div class="uc">
+    <div class="uc-icon">🧪</div>
+    <div class="uc-title">Tester</div>
+    <div class="uc-desc">כותב בדיקות, מריץ, מדווח על כשלים</div>
+    <div class="uc-agents"><span class="uc-a">testing-patterns</span></div>
+  </div>
+  <div class="uc">
+    <div class="uc-icon">🚀</div>
+    <div class="uc-title">DevOps</div>
+    <div class="uc-desc">פורס ל-Vercel, מגדיר משתני סביבה</div>
+    <div class="uc-agents"><span class="uc-a">deploy-to-vercel</span><span class="uc-a">environment-management</span></div>
+  </div>
+</div>
+
+<p><strong>ההבדל הגדול ביחס לצוות תוכן:</strong> בפיתוח, הסוכן פועל על קבצים אמיתיים ורץ בדפדפן. הוא לא רק כותב — הוא גם מריץ ובודק. זה הופך את ה-Feedback Loop להרבה יותר מהיר.</p>
+<div class="co cob"><strong>כשעובדים עם כמה Developer Agents במקביל:</strong> חובה Workspace נפרד לכל אחד. שני סוכנים שעורכים את אותו קובץ בו-זמנית = conflict שקשה לפתור.</div>
+</div>
+
+<!-- ═══ USE CASE: RESEARCH ═══ -->
+<div class="fs" id="uc-research">
+<div class="st">יוזקייס 3 — צוות מחקר</div>
+<p><strong>בעיה שפותרת:</strong> איסוף, עיבוד וסינתזה של מידע מכמה מקורות — בלי לקרוא הכל בעצמך.</p>
+
+<div class="uc-grid">
+  <div class="uc">
+    <div class="uc-icon">🔎</div>
+    <div class="uc-title">Researcher</div>
+    <div class="uc-desc">חיפוש ואיסוף מקורות לפי שאלת מחקר</div>
+    <div class="uc-agents"><span class="uc-a">web-search</span><span class="uc-a">source-evaluation</span></div>
+  </div>
+  <div class="uc">
+    <div class="uc-icon">📊</div>
+    <div class="uc-title">Analyzer</div>
+    <div class="uc-desc">מסנן, מאמת, מזהה דפוסים וסתירות</div>
+    <div class="uc-agents"><span class="uc-a">fact-checking</span><span class="uc-a">data-synthesis</span></div>
+  </div>
+  <div class="uc">
+    <div class="uc-icon">📝</div>
+    <div class="uc-title">Writer</div>
+    <div class="uc-desc">מוציא דוח/סיכום על בסיס הניתוח</div>
+    <div class="uc-agents"><span class="uc-a">copywriting-patterns</span><span class="uc-a">brand-voice</span></div>
+  </div>
+  <div class="uc">
+    <div class="uc-icon">✅</div>
+    <div class="uc-title">Fact Checker</div>
+    <div class="uc-desc">בודק כל טענה נגד מקורות לפני שיוצא</div>
+    <div class="uc-agents"><span class="uc-a">fact-checking</span></div>
+  </div>
+</div>
+</div>
+
+<!-- ═══ USE CASE: SOLO ═══ -->
+<div class="fs" id="uc-solo">
+<div class="st">יוזקייס 4 — סוכן יחיד (הכי נפוץ)</div>
+<p>לא כל משימה צריכה צוות. רוב הזמן — סוכן אחד עם Skills טובות עושה את העבודה.</p>
+<div class="tw"><table>
+<tr><th>משימה</th><th>Skills נדרשות</th><th>אורך שיחה מומלץ</th></tr>
+<tr><td>כתיבת פוסט אחד</td><td>brand-voice, copywriting-patterns</td><td>שיחה אחת</td></tr>
+<tr><td>בניית דף אחד באתר</td><td>design-system, nextjs-patterns</td><td>שיחה אחת</td></tr>
+<tr><td>עריכת מסמך קיים</td><td>brand-voice</td><td>שיחה אחת</td></tr>
+<tr><td>בניית API endpoint</td><td>api-design-principles</td><td>שיחה אחת</td></tr>
+<tr><td>מחקר נושא</td><td>source-evaluation, synthesis</td><td>שיחה אחת</td></tr>
+</table></div>
+<div class="co cot"><strong>כלל האצבע:</strong> תחל עם סוכן אחד. עבור לצוות רק כשיש תלויות ברורות בין חלקים, או כשהשיחה הופכת ארוכה מדי.</div>
+</div>
+
+<!-- ═══ HIERARCHY ═══ -->
+<div class="fs" id="hierarchy">
+<div class="ch"><div class="cn">7</div><h2>היררכיית תיקיות — הסטנדרט שעובד</h2></div>
+
+<p>המבנה שלמטה עובד לכל סוג פרויקט — שנה רק את תכולת ה-Skills, לא את המבנה.</p>
+
+<div class="hier">
+<span class="d">my-project/</span>
+├── <span class="d">.agent/</span>                     <span class="cm"># הכל שמתחיל ב-dot = נסתר מהעין, גלוי לסוכן</span>
+│   │
+│   ├── <span class="hl">rules.md</span>               <span class="cm"># ← קרא בכל שיחה. חוקי ברזל.</span>
+│   ├── <span class="hl">context.md</span>             <span class="cm"># ← קרא בכל שיחה. עדכן בסוף כל שיחה.</span>
+│   │
+│   ├── <span class="d">skills/</span>                <span class="cm"># ← נטענות on-demand לפי המשימה</span>
+│   │   ├── <span class="d">brand-voice/</span>
+│   │   │   └── <span class="sk">SKILL.md</span>
+│   │   ├── <span class="d">design-system/</span>
+│   │   │   └── <span class="sk">SKILL.md</span>
+│   │   ├── <span class="d">deploy-config/</span>
+│   │   │   └── <span class="sk">SKILL.md</span>
+│   │   └── <span class="d">[skill נוספות לפי הצורך]/</span>
+│   │       └── <span class="sk">SKILL.md</span>
+│   │
+│   ├── <span class="d">workflows/</span>             <span class="cm"># ← מופעלות ב-/פקודה</span>
+│   │   ├── <span class="f">create-post.md</span>     <span class="cm"># /create-post</span>
+│   │   ├── <span class="f">weekly-batch.md</span>    <span class="cm"># /weekly-content</span>
+│   │   └── <span class="f">deploy.md</span>          <span class="cm"># /deploy</span>
+│   │
+│   └── <span class="d">notes/</span>                 <span class="cm"># ← ידע ספציפי שלא מתאים ל-Skills</span>
+│       ├── <span class="f">integrations.md</span>    <span class="cm"># פרטי API, tokens</span>
+│       └── <span class="f">decisions.md</span>       <span class="cm"># החלטות שהתקבלו ולמה</span>
+│
+├── <span class="d">src/</span>                       <span class="cm"># קוד הפרויקט עצמו</span>
+├── <span class="d">drafts/</span>                    <span class="cm"># עבודה בתהליך (תוכן / מחקר)</span>
+├── <span class="d">approved/</span>                  <span class="cm"># מאושר, לא נגע</span>
+└── <span class="d">published/</span>                 <span class="cm"># פורסם — ארכיון</span>
+</div>
+
+<div class="co cot"><strong>כלל שמות:</strong> תיקיות ב-<code>.agent/</code> — באנגלית, ללא רווחים. קבצי תוכן (drafts, approved) — תאריך_נושא.md. תאריך תמיד קודם כדי שהקבצים ממוינים כרונולוגית.</div>
+</div>
+
+<!-- ═══ COMMANDS ═══ -->
+<div class="fs" id="commands">
+<div class="ch"><div class="cn">8</div><h2>פקודות — ממציאים או שיש ספרייה?</h2></div>
+
+<p>שאלה מצוינת ופרקטית מאוד. התשובה: <strong>בעיקר ממציאים — אבל יש בסיס לעמוד עליו.</strong></p>
+
+<div class="st">מה קיים בתיעוד הרשמי של Google</div>
+<p>Antigravity מגיע עם כמה פקודות מובנות שעובדות בלי הגדרה:</p>
+<div class="tw"><table>
+<tr><th>פקודה מובנית</th><th>מה עושה</th><th>מקור</th></tr>
+<tr><td><code>/scan</code></td><td>סורק את תיקיית הפרויקט ומסכם מה הסוכן מבין</td><td>Google — מובנה</td></tr>
+<tr><td><code>/plan</code></td><td>עובר ל-Planning Mode — מייצר Implementation Plan לפני ביצוע</td><td>Google — מובנה</td></tr>
+<tr><td><code>/status</code></td><td>דוח מצב קצר — מה רץ, מה הושלם, מה ממתין</td><td>Google — מובנה</td></tr>
+<tr><td><code>/reset-context</code></td><td>מנקה את ה-Context Window הנוכחי</td><td>Google — מובנה</td></tr>
+<tr><td><code>/skills</code></td><td>מציג את כל ה-Skills הזמינות בפרויקט</td><td>Google — מובנה</td></tr>
+</table></div>
+
+<div class="st">מה הקהילה בנתה — ספרייה חלקית</div>
+<p>ב-<code>github.com/rmyndharis/antigravity-skills</code> יש לא רק Skills אלא גם workflow patterns נפוצים:</p>
+<div class="tw"><table>
+<tr><th>Workflow Pattern</th><th>מה עושה</th><th>מתאים ל</th></tr>
+<tr><td><code>/create-feature</code></td><td>פיצ'ר שלם מ-spec לקוד לבדיקות</td><td>צוות פיתוח</td></tr>
+<tr><td><code>/review-pr</code></td><td>סקירת Pull Request לפי קריטריונים</td><td>פיתוח</td></tr>
+<tr><td><code>/generate-docs</code></td><td>תיעוד אוטומטי מקוד קיים</td><td>פיתוח</td></tr>
+<tr><td><code>/research-topic</code></td><td>מחקר נושא + סיכום מובנה</td><td>צוות מחקר</td></tr>
+<tr><td><code>/repurpose-content</code></td><td>פיסת תוכן → כמה פורמטים</td><td>צוות תוכן</td></tr>
+</table></div>
+
+<div class="st">מה ממציאים — לפי הפרויקט שלך</div>
+<p>כל משימה שחוזרת יותר מ-3 פעמים — כדאי להפוך אותה ל-Workflow. הפורמט פשוט:</p>
+<div class="cb"><pre><code># Workflow: /[שם-הפקודה]
+## Input נדרש: [מה צריך לקבל]
+
+## שלב 1 — [תיאור]
+[מה לעשות]
+[Skills לטעון]
+[Artifact מה להוציא]
+
+## שלב 2 — [תיאור]
+[מה לעשות]
+...</code></pre></div>
+
+<div class="co cob"><strong>כלל:</strong> שם הקובץ = שם הפקודה. קובץ <code>.agent/workflows/create-post.md</code> מופעל עם <code>/create-post</code>. פשוט.</div>
+
+<div class="st">מה Google מתכנן להוסיף (לפי ה-Roadmap הרשמי)</div>
+<ul>
+  <li>Workflow Marketplace — ספרייה רשמית של Workflows מאושרים על ידי Google</li>
+  <li>Skill Store — מקום מרכזי להורדת Skills ולשיתוף</li>
+  <li>Built-in Scheduler — תזמון מובנה בתוך Antigravity עצמו (עדיין בבטא)</li>
+  <li>Cross-Agent Communication — פרוטוקול תקשורת מובנה בין סוכנים</li>
+</ul>
+<div class="co coa"><strong>נכון לאפריל 2026:</strong> אין עדיין Marketplace רשמי. בינתיים — הקהילה ב-GitHub והאוסף של <code>rmyndharis</code> הם הבסיס הטוב ביותר.</div>
+</div>
+
+<!-- ═══ ANTI-PATTERNS ═══ -->
+<div class="fs" id="anti-patterns">
+<div class="ch"><div class="cn">9</div><h2>טעויות נפוצות — איך אנשים נשברים עם סוכנים</h2></div>
+
+<div class="tw"><table>
+<tr><th>טעות</th><th>מה קורה</th><th>הפתרון</th></tr>
+<tr><td>מנהלים סוכן כמו עובד</td><td>מצפים ליוזמה, לזיכרון, לשיקול דעת — ומתאכזבים</td><td>לכתוב context.md. להגדיר Skills. לא לצפות שהסוכן "ידע"</td></tr>
+<tr><td>שיחות ארוכות מדי</td><td>הסוכן "שוכח" מה אמרת בתחילת השיחה</td><td>פיצ'ר אחד = שיחה אחת. בסוף — עדכן context.md.</td></tr>
+<tr><td>אין context.md</td><td>כל שיחה מתחילה מאפס. מסבירים מחדש כל פעם.</td><td>context.md חובה. לעדכן בסוף כל שיחה — 2 דקות.</td></tr>
+<tr><td>Skills כלליות מדי</td><td>הסוכן מתנהג גנרי, לא מיוחד לפרויקט</td><td>Skills ספציפיות: צבעים, פונטים, מילים, דוגמאות</td></tr>
+<tr><td>Workflow ללא Handoff</td><td>הסוכן הבא לא יודע מה עשה הקודם</td><td>כל Artifact = Handoff מובנה</td></tr>
+<tr><td>כמה סוכנים על אותו קובץ</td><td>Conflicts — שני סוכנים כותבים גרסאות שונות</td><td>Workspace נפרד לכל סוכן שעובד על קבצים</td></tr>
+<tr><td>מבקשים "לזכור" בקול</td><td>"זכור שאני אוהבת X" — לא ייזכר בשיחה הבאה</td><td>לכתוב בקובץ. מה שלא כתוב — לא קיים.</td></tr>
+</table></div>
+</div>
+
+<!-- ═══ MENTAL MODEL ═══ -->
+<div class="fs" id="mental-model">
+<div class="ch"><div class="cn">10</div><h2>המודל המנטלי הנכון</h2></div>
+
+<p>תחשבי על סוכן כמו <strong>קבלן מומחה שמגיע לפרויקט בלי רקע קודם.</strong></p>
+
+<p>כשקבלן טוב מגיע לעבודה:</p>
+<ul>
+  <li>הוא מסתכל על התוכניות שנתת לו (= Skills + Rules)</li>
+  <li>הוא שואל מה המצב הנוכחי (= context.md)</li>
+  <li>הוא עושה בדיוק מה שנאמר לו — לא יותר, לא פחות</li>
+  <li>בסוף כל יום הוא מדווח מה עשה ומה הבא (= עדכון context.md)</li>
+  <li>מחר הוא חוזר — ואם לא תתן לו את התוכניות שוב, הוא לא יזכור אותן</li>
+</ul>
+
+<div class="co cot"><strong>ההשלכה:</strong> ככל שהתוכניות שלך (Skills) טובות יותר, וכל שה"דף סיכום" שלך (context.md) מעודכן יותר — הקבלן עובד טוב יותר. זו לא בעיה בסוכן. זו שיטת עבודה.</div>
+
+<div class="st">השוואה אחת ששווה אלף מילים</div>
+<div style="display:grid;grid-template-columns:1fr 1fr;gap:0;border-radius:14px;overflow:hidden;border:1px solid var(--border);margin:1rem 0">
+  <div style="background:#fef9c3;padding:1.1rem">
+    <strong style="display:block;margin-bottom:8px;color:#713f12">עובד בפגישת onboarding</strong>
+    <p style="font-size:.83rem;color:#78350f;margin:0">"היי, אני שיר. אנחנו כותבים בלוג על טרקים. הסגנון שלנו ישיר ולא מתנצל. הפרויקט הכי דחוף עכשיו הוא מאמר על Alta Via 1. יש לנו deadline ב-15 לאפריל."<br><br>מחר — הוא זוכר הכל.</p>
+  </div>
+  <div style="background:#f0fdfa;padding:1.1rem;border-right:1px solid var(--border)">
+    <strong style="display:block;margin-bottom:8px;color:var(--td)">סוכן AI בפתיחת שיחה</strong>
+    <p style="font-size:.83rem;color:var(--td);margin:0">קורא context.md:<br>"אני שיר, כותבת בלוג טרקים. סגנון ישיר ולא מתנצל. הפרויקט הדחוף: Alta Via 1, deadline 15/4."<br><br>מחר — אם context.md עודכן: זוכר הכל. אם לא: אפס.</p>
+  </div>
+</div>
+
+<p><strong>ההבדל היחיד:</strong> עם עובד — את מספרת פעם אחת. עם סוכן — את כותבת פעם אחת.</p>
+</div>
+
+<!-- ═══ CLOSING ═══ -->
+<div class="fs" id="closing">
+<div class="cbox">
+  <h2>מה לקחת מהמדריך הזה</h2>
+  <p>סוכן הוא לא עובד מהיר יותר. הוא כלי אחר לחלוטין — עם יתרונות ומגבלות שונות.</p>
+  <div style="background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.15);border-radius:12px;padding:1.2rem 1.5rem;margin:1.5rem 0;text-align:right;color:#e2e8f0;font-size:.9rem;line-height:1.9">
+    ✅ סוכן לא זוכר בין שיחות — context.md הוא הפתרון<br>
+    ✅ סוכן לא יוזם — Workflows ותזמון חיצוני הם הפתרון<br>
+    ✅ סוכן לא "מבין" — Skills טובות הן הפתרון<br>
+    ✅ כמה סוכנים = Workspaces נפרדים<br>
+    ✅ פקודות: חלק מובנות בGoogle, חלק מהקהילה, חלק תמציאי לבד<br>
+    ✅ תזמון: כלים חיצוניים (Make/Zapier/Cron) — לא Antigravity עצמו
+  </div>
+  <p>כשמנהלים סוכן נכון — הוא לא תחליף לעובד. הוא כלי שמגביר את מה שאת עושה.</p>
+  <div class="cp">
+    <span class="pi">📘 בחזרה: מדריך Antigravity המלא</span>
+    <span class="pi">🤝 צוות תוכן אוטונומי</span>
+    <span class="pi">✉️ yourwaytrek@gmail.com</span>
+  </div>
+</div>
+<p style="text-align:center;font-size:.78rem;color:var(--slate);margin-top:1rem">
+  שיר אורן | YourWayTrek@gmail.com | 0547-962965<br>
+  <a href="/guides/antigravity_v2.html" style="color:var(--teal)">← מדריך Antigravity המלא</a> &nbsp;|&nbsp;
+  <a href="/guides/content-team.html" style="color:var(--teal)">צוות תוכן אוטונומי ←</a>
+</p>
+</div>
+
+</div></div>
+
+<script>
+window.addEventListener('scroll',()=>{const h=document.documentElement;document.getElementById('pb').style.width=(h.scrollTop/(h.scrollHeight-h.clientHeight)*100)+'%'});
+const fo=new IntersectionObserver(e=>{e.forEach(x=>{if(x.isIntersecting){x.target.classList.add('visible');fo.unobserve(x.target)}})},{threshold:.06,rootMargin:'0px 0px -40px 0px'});
+document.querySelectorAll('.fs').forEach(el=>fo.observe(el));
+const sc=document.querySelectorAll('.fs[id],header[id]'),ni=document.querySelectorAll('.ni[href]');
+const so=new IntersectionObserver(e=>{e.forEach(x=>{if(x.isIntersecting){const id=x.target.getAttribute('id');ni.forEach(a=>a.classList.toggle('active',a.getAttribute('href')==='#'+id));const ac=document.querySelector('.ni.active');if(ac)document.getElementById('mw').textContent=ac.textContent.trim()}})},{threshold:.2});
+sc.forEach(s=>so.observe(s));
+const sb=document.getElementById('sb'),ov=document.getElementById('ov');
+function cn(){sb.classList.remove('open');ov.classList.remove('show')}
+document.getElementById('hb').addEventListener('click',()=>sb.classList.contains('open')?cn():(sb.classList.add('open'),ov.classList.add('show')));
+ov.addEventListener('click',cn);
+document.querySelectorAll('a[href^="#"]').forEach(a=>{a.addEventListener('click',e=>{e.preventDefault();const t=document.querySelector(a.getAttribute('href'));if(t)window.scrollTo({top:t.offsetTop-(window.innerWidth<=900?68:20),behavior:'smooth'})})});
+</script>
+</body>
+</html>
